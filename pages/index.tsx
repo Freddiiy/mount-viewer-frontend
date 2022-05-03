@@ -31,7 +31,7 @@ const Home: NextPage = () => {
             setCharacter(data);
         }
     })
-    const MyButton = React.forwardRef(({ onClick, href }, ref) => {
+    const MyButton = React.forwardRef(({onClick, href}, ref) => {
         return (
             <a href={href} onClick={onClick} ref={ref}>
                 Click Me
@@ -39,13 +39,38 @@ const Home: NextPage = () => {
         )
     })
 
+    function dropdownMenu() {
+        const list = document.getElementById("option");
+        document.getElementById("Region").value = list.options[list.selectedIndex].text;
+    }
+
     return (
         <>
-<Link href="/mount" passHref>
-    <MyButton/>
-</Link>
-        {character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}
-        {mount ? <h1>{mount.mountId}</h1> : <h1>Ingen mounts</h1>}
+
+            <input placeholder={"Character name"}/>
+
+            <select id="option" onChange="dropdownMenu()">
+                <option value ="" disabled selected hidden  > Region</option>
+                <option>EU</option>
+                <option>US</option>
+
+            </select>
+
+            <select id="option" onChange="dropdownMenu()">
+                <option value ="" disabled selected hidden > Realms</option>
+                <option>Terro-mill</option>
+                <option>STuuff</option>
+                <option>Arronish</option>
+                <option>Habbiibi</option>
+            </select>
+
+
+
+            <Link href="/mount" passHref>
+                <MyButton/>
+            </Link>
+            {character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}
+            {mount ? <h1>{mount.mountId}</h1> : <h1>Ingen mounts</h1>}
 
         </>
     )
