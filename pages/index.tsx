@@ -22,6 +22,7 @@ const Home: NextPage = () => {
             setMount(data);
         }
     })
+
 // fetching data for Character
     const [character, setCharacter] = useState<ICharacter>();
     useEffect(() => {
@@ -31,51 +32,57 @@ const Home: NextPage = () => {
             setCharacter(data);
         }
     })
+
     // eslint-disable-next-line react/display-name
-    const MyButton = React.forwardRef(({onClick, href}, ref) => {
-        return (
-            <a href={href} onClick={onClick} ref={ref}>
-               <button> Click</button>
-            </a>
-        )
-    })
-
-
 
 
     return (
         <>
+
+
             <div className="container">
 
+                <div id="proppeties">
 
-            <input placeholder={"Character name"}/>
+                    <input className="inputCharacter" placeholder="Character name"/>
 
-            <select id="option">
-                <option value="" disabled selected hidden> Region</option>
-                <option>EU</option>
-                <option>US</option>
+                    <select id="option" className="region">
+                        <option value="" disabled selected hidden> Region</option>
+                        <option>EU</option>
+                        <option>US</option>
+                    </select>
 
-            </select>
-
-            <select id="option">
-                <option value="" disabled selected hidden> Realms</option>
-                <option>Terro-mill</option>
-                <option>STuuff</option>
-                <option>Arronish</option>
-                <option>Habbiibi</option>
-            </select>
-
-
-            <Link href="/mount" passHref>
-                <MyButton/>
-            </Link>
+                    <select required id="option" className="realms">
+                        <option value="1" disabled selected hidden> Realms</option>
+                        <option>Terro-mill</option>
+                        <option>STuuff</option>
+                        <option>Arronish</option>
+                        <option>Habbiibi</option>
+                    </select>
 
 
-            {character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}
-            {mount ? <h1>{mount.mountId}</h1> : <h1>Ingen mounts</h1>}
+                    <div id="button">
+                        <Link href="/mount" passHref>
+                            <button id="innerButton">
+                                <>
+                                Loggin
+                                    {/*{character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}*/}
+                                </>
+                            </button>
+                        </Link>
+                    </div>
+
+                </div>
 
 
             </div>
+
+
+
+
+            {/*{mount ? <h1>{mount.mountId}</h1> : <h1>Ingen mounts</h1>}*/}
+
+
         </>
     )
 }
