@@ -6,9 +6,9 @@ import {IMount} from "../utils/types/Mount.t";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {ICharacter} from "../utils/types/Character.t";
-import mount from "./mount";
 import Link from "next/link";
 import react from 'react'
+import GridComponent from "../components/GrindSection/GridComponet";
 
 const Home: NextPage = () => {
 
@@ -61,11 +61,24 @@ const Home: NextPage = () => {
                     </select>
 
 
+
+
                     <div id="button">
                         <Link href="/mount" passHref>
                             <button id="innerButton">
                                 <>
                                 Loggin
+                                    {/*{character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}*/}
+                                </>
+                            </button>
+                        </Link>
+                    </div>
+
+                    <div id="button">
+                        <Link href="/Amount" passHref>
+                            <button  className="button2">
+                                <>
+                                    Loggin
                                     {/*{character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}*/}
                                 </>
                             </button>

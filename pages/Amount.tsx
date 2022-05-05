@@ -5,7 +5,7 @@ import {IMount, mountArray} from "../utils/types/Mount.t";
 import {ICharacter, charaterI} from "../utils/types/Character.t";
 import CharacterGetter from "../components/CharacterGetter/CharacterGetter";
 
-const Mount: NextPage = () => {
+const Amount: NextPage = () => {
 
     const [mounts, setMounts] = useState<IMount[]>([]);
 
@@ -20,13 +20,13 @@ const Mount: NextPage = () => {
 
     return (
         <>
-                <div className="navBar">
-                    <a className="active" href="#home">
-                         <p className="cName">{charaterI.characterName}</p>
-                    </a>
-                </div>
+            <div className="navBar2">
+                <a className="active2" href="#home">
+                    <p>{charaterI.characterName}</p>
+                </a>
+            </div>
 
-            <div className="container2">
+            <div className="container3">
                 <br/>
                 <h1></h1>
                 {mounts.map((mount, key) => (
@@ -40,4 +40,4 @@ const Mount: NextPage = () => {
     )
 }
 
-export default Mount
+export default Amount
