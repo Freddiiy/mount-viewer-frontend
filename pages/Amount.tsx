@@ -21,7 +21,7 @@ const Amount: NextPage = () => {
     return (
         <>
             <div className="navBar2">
-                <a className="active2" href="#home">
+                <a className="active" href="#home">
                     <p>{charaterI.characterName}</p>
                 </a>
             </div>

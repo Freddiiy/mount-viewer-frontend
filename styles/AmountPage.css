@@ -40,7 +40,7 @@
 }
 
 /* Add a color to the active/current link */
-.navBar2 a.active2 {
+.navBar2 a.active {
     background-color: #04AA6D;
     color: white;
     size: auto;
