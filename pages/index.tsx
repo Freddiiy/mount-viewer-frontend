@@ -4,11 +4,12 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import {IMount} from "../utils/types/Mount.t";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ICharacter} from "../utils/types/Character.t";
 import Link from "next/link";
 import react from 'react'
 import GridComponent from "../components/GrindSection/GridComponet";
+import {RealmContextEU} from "../store/RealmContext/RealmList";
 
 const Home: NextPage = () => {
 
@@ -33,13 +34,13 @@ const Home: NextPage = () => {
         }
     })
 
+    const RealmContextTest = useContext(RealmContextEU);
+
     // eslint-disable-next-line react/display-name
 
 
     return (
         <>
-
-
             <div className="container">
 
                 <div id="proppeties">
@@ -87,6 +88,20 @@ const Home: NextPage = () => {
 
                 </div>
 
+            </div>
+            <div>
+                <h1>
+
+                    {RealmContextTest ? RealmContextTest.map((realms, key) => (
+                        <>
+                            {realms.realms.map((realm, key) => (
+                                <>
+                                    <h1>{realm.name}</h1>
+                                </>
+                            ))}
+                        </>
+                    )) : (<><h1>no realm :(</h1></>)}
+                </h1>
 
             </div>
 
