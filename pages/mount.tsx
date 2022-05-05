@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {IMount, mountArray} from "../utils/types/Mount.t";
 import {ICharacter, charaterI} from "../utils/types/Character.t";
 import CharacterGetter from "../components/CharacterGetter/CharacterGetter";
+import Link from "next/link";
 
 const Mount: NextPage = () => {
 
@@ -21,9 +22,21 @@ const Mount: NextPage = () => {
     return (
         <>
                 <div className="navBar">
-                    <a className="active" href="#home">
-                         <p className="cName">{charaterI.characterName}</p>
-                    </a>
+                    <ul>
+                        <li className="dropdown">
+                            <a href="javascript:void(0)" className="dropbtn">{characterI?.characterName}</a>
+                            <div className="dropdown-content">
+                                <a href="#" className="link2"><p className="cName">{charaterI.characterName}</p></a>
+                                <a href="#" className="link2">Look</a>
+                                <Link href="/" passHref>
+                                <a href="#" className="link2">logout</a>
+                                </Link>
+                            </div>
+                        </li>
+                    </ul>
+
+
+
                 </div>
 
             <div className="container2">

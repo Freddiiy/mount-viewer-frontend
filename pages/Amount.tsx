@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {IMount, mountArray} from "../utils/types/Mount.t";
 import {ICharacter, charaterI} from "../utils/types/Character.t";
 import CharacterGetter from "../components/CharacterGetter/CharacterGetter";
+import Link from "next/link";
 
 const Amount: NextPage = () => {
 
@@ -21,11 +22,22 @@ const Amount: NextPage = () => {
     return (
         <>
             <div className="navBar2">
-                <a className="active" href="#home">
-                    <p>{charaterI.characterName}</p>
-                </a>
-            </div>
+                <ul>
+                    <li className="dropdown2">
+                        <a href="javascript:void(0)" className="dropbtn2">{characterI?.characterName}</a>
+                        <div className="dropdown2-content">
+                            <a href="#" className="link"><p className="cName">{charaterI.characterName}</p></a>
+                            <a href="#" className="link">Look</a>
+                            <Link href="/" passHref>
+                                <a href="#" className="link">logout</a>
+                            </Link>
+                        </div>
+                    </li>
+                </ul>
 
+
+
+            </div>
             <div className="container3">
                 <br/>
                 <h1></h1>
