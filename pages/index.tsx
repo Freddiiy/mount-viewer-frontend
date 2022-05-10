@@ -5,14 +5,26 @@ import styles from '../styles/Home.module.css'
 import {IMount} from "../utils/types/Mount.t";
 import axios from "axios";
 import React, {useContext, useEffect, useState} from "react";
-import {ICharacter} from "../utils/types/Character.t";
+import {charaterI, ICharacter} from "../utils/types/Character.t";
 import Link from "next/link";
 import react from 'react'
 import GridComponent from "../components/GrindSection/GridComponet";
-import {RealmContextEU} from "../store/RealmContext/RealmList";
+import {RealmContextEU, RealmContextUS} from "../store/RealmContext/RealmList";
+import {IRealm} from "../utils/types/Realm.t";
+import {Simulate} from "react-dom/test-utils";
+import select = Simulate.select;
+import {useRouter} from "next/router";
+
 
 const Home: NextPage = () => {
 
+    const router = useRouter();
+    const search = () => {
+        charaterI.characterName = (document.getElementById('hej') as HTMLInputElement).value;
+        charaterI.characterRealm = (document.getElementById('option2') as HTMLInputElement).value;
+        charaterI.characterRegion = (document.getElementById('option1') as HTMLInputElement).value;
+        charaterI.characterFaction = (document.getElementById("") as HTMLInputElement).value;
+    }
 
     // Fetching data from mounts
     const [mount, setMount] = useState<IMount>();
@@ -34,85 +46,96 @@ const Home: NextPage = () => {
         }
     })
 
-    const RealmContextTest = useContext(RealmContextEU);
 
-    // eslint-disable-next-line react/display-name
+    const [realmEU, setRealmEU] = useState("");
+    const reamlsDescider = (e: React.ChangeEvent<HTMLSelectElement>) => {
 
+        const realmse = e.target.value
+        setRealmEU(realmse)
 
-    return (
-        <>
-            <div className="container">
-
-                <div id="proppeties">
-
-                    <input className="inputCharacter" placeholder="Character name"/>
-
-                    <select id="option" className="region">
-                        <option value="" disabled selected hidden> Region</option>
-                        <option>EU</option>
-                        <option>US</option>
-                    </select>
-
-                    <select required id="option" className="realms">
-                        <option value="1" disabled selected hidden> Realms</option>
-                        <option>Terro-mill</option>
-                        <option>STuuff</option>
-                        <option>Arronish</option>
-                        <option>Habbiibi</option>
-                    </select>
+    }
 
 
+    const [characterFactioc, setCharacterFaction] = useState("")
+    const factionDecider = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+        const faction = e.target.value
+        setCharacterFaction(faction)
+        console.log(faction)
+
+    }
+
+    const handleClick = () => {
+            characterFactioc == "Horde" ? router.push("/mount") :
+            characterFactioc == "Alliance" ? router.push("/Amount") : ""
+
+    }
 
 
-                    <div id="button">
-                        <Link href="/mount" passHref>
-                            <button id="innerButton">
-                                <>
-                                Loggin
-                                    {/*{character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}*/}
-                                </>
-                            </button>
-                        </Link>
-                    </div>
+const RealmEU = useContext(RealmContextEU);
+const RealmUS = useContext(RealmContextUS);
 
-                    <div id="button">
-                        <Link href="/Amount" passHref>
-                            <button  className="button2">
-                                <>
-                                    Loggin
-                                    {/*{character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}*/}
-                                </>
-                            </button>
-                        </Link>
-                    </div>
+// eslint-disable-next-line react/display-name
 
+
+return (
+    <>
+
+        <div className="container">
+
+            <div id="proppeties">
+
+                <input className="inputCharacter" id="hej" placeholder="Character name"/>
+
+                <select onChange={reamlsDescider} id="option1" className="region">
+                    <option value="" disabled selected hidden> Region</option>
+                    <option>EU</option>
+                    <option>US</option>
+                </select>
+
+                <select required id="option2" className="realms">
+                    <option value="1" disabled selected hidden> Realms</option>
+                    {
+                        realmEU == "EU" ? RealmEU?.map(item => (
+                                <option key={item.id}>{item.name}</option>))
+                            :
+                            realmEU == "US" ? RealmUS?.map(item => (
+                                <option key={item.id}>{item.name}</option>
+                            )) : <option disabled>No Region Selected</option>}
+                </select>
+
+                <select onChange={factionDecider} id="option1" className="region">
+                    <option value="" disabled selected hidden> Faction</option>
+                    <option>Horde</option>
+                    <option>Alliance</option>
+                </select>
+
+
+                <div id="button">
+                    <button onClick={handleClick} id="innerButton">
+                        <>
+                            Loggin
+                            {/*{character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}*/}
+                        </>
+                    </button>
                 </div>
 
-            </div>
-            <div>
-                <h1>
 
-                    {RealmContextTest ? RealmContextTest.map((realms, key) => (
-                        <>
-                            {realms.realms.map((realm, key) => (
-                                <>
-                                    <h1>{realm.name}</h1>
-                                </>
-                            ))}
-                        </>
-                    )) : (<><h1>no realm :(</h1></>)}
-                </h1>
 
             </div>
 
+        </div>
+        <div>
 
 
+        </div>
 
-            {/*{mount ? <h1>{mount.mountId}</h1> : <h1>Ingen mounts</h1>}*/}
+
+        {/*{mount ? <h1>{mount.mountId}</h1> : <h1>Ingen mounts</h1>}*/}
 
 
-        </>
-    )
+    </>
+)
 }
 
 export default Home
