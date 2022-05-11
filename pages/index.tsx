@@ -80,7 +80,7 @@ const RealmUS = useContext(RealmContextUS);
 
 return (
     <>
-
+    {/*
         <div className="container">
 
             <div id="proppeties">
@@ -115,7 +115,6 @@ return (
                     <button onClick={handleClick} id="innerButton">
                         <>
                             Loggin
-                            {/*{character ? <h1>{character.name}</h1> : <h1>ingen Character</h1>}*/}
                         </>
                     </button>
                 </div>
@@ -131,10 +130,11 @@ return (
         </div>
 
 
-        {/*{mount ? <h1>{mount.mountId}</h1> : <h1>Ingen mounts</h1>}*/}
 
 
+    */}
     </>
+
 )
 }
 
