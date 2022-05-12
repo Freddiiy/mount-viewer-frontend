@@ -19,15 +19,17 @@ const Amount: NextPage = () => {
     })
 
 
+
+
     return (
         <>
             <div className="navBar2">
                 <ul>
                     <li className="dropdown2">
-                        <a href="javascript:void(0)" className="dropbtn2">{characterI?.characterName}</a>
+                        <a href="javascript:void(0)" className="dropbtn2">{charaterI?.characterName}</a>
                         <div className="dropdown2-content">
                             <a href="#" className="link"><p className="cName">{charaterI.characterName}</p></a>
-                            <a href="#" className="link">Look</a>
+                            <a href="#" className="link">{charaterI.characterRealm}</a>
                             <Link href="/" passHref>
                                 <a href="#" className="link">logout</a>
                             </Link>

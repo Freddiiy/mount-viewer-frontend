@@ -4,8 +4,16 @@ export interface ICharacter{
     characterName: string
     characterRegion: string,
     characterRealm:string,
-    characterFaction:string,
+    faction:Faction,
+    characterAvatar: string,
 }
+
+
+export interface Faction {
+    type: string;
+    name: string;
+}
+
 
 export const charaterI: ICharacter =
     {
@@ -13,5 +21,57 @@ export const charaterI: ICharacter =
         characterName:"",
         characterRegion:"",
         characterRealm:"",
-        characterFaction:"Horde"
+        faction:{
+            type:"",
+            name:"",
+        },
+        characterAvatar:""
     }
+
+
+
+//
+// export interface ICharacter {
+//     id:      number;
+//     name:    string;
+//     level:   number;
+//     gender:  Gender;
+//     faction: Faction;
+//     race:    Race;
+// }
+//
+// export interface Gender {
+//     type: string;
+//     name: string;
+// }
+//
+// export interface Faction {
+//     type: string;
+//     name: string;
+// }
+//
+// export interface Race {
+//     name: string;
+//     id:   number;
+// }
+//
+//
+// export const charaterI: ICharacter =
+//     {
+//         id: 1,
+//         name:"",
+//         level:1,
+//         gender: {
+//             type: "",
+//             name: ""
+//         },
+//         faction: {
+//             type: "",
+//             name: ""
+//         },
+//         race: {
+//             name: "",
+//             id: 1
+//         }
+//     }
+

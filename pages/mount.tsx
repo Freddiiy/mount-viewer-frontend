@@ -20,7 +20,7 @@ const Mount: NextPage = () => {
 
     const [avatar, setAvatar] = useState("");
     const getAvatar = async () => {
-        const response = await fetch(`https://tychondi.dk/api/getAvatar/${charaterI.characterRegion}/${charaterI.characterRealm}/${charaterI.characterName}`)
+        const response = await fetch(`https://tychondi.dk/mount/api/character/character-media/${charaterI.characterRegion}/${charaterI.characterRealm}/${charaterI.characterName}`)
             .then(response=> response.json())
             .then(data =>{
                 setAvatar(data)
