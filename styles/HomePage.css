@@ -1,0 +1,68 @@
+.container{
+    display: block;
+    background-image: url("../public/Background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
+    white-space: nowrap
+}
+.container{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid green;
+    padding: 10px;
+    height: 100vh;
+
+}
+#proppeties{
+text-align: center;
+
+
+}
+#button{
+    margin-top: 50px;
+    display: block;
+
+
+}
+#innerButton{
+    background-color: red;
+    color: yellow;
+    border-color: yellow;
+    width: 100px;
+   cursor: pointer;
+
+
+}
+select {
+    margin-left: 5px;
+    background-color: red;
+    color: yellow;
+    border-color: yellow;
+    width: 100px;
+    cursor: pointer;
+
+}
+select{
+    color: yellow;
+}
+option{
+    color:yellow;
+}
+
+.inputCharacter{
+    background-color: red;
+    color: black;
+    border-color: yellow;
+
+
+}
+input::placeholder {
+    color: yellow;
+}
+.button2{
+    background-color: blue;
+}
