@@ -29,6 +29,8 @@ const Mount: NextPage = () => {
 
 	function Header() {
 		return (
+
+			{/*
 			<div className={character.value?.faction.type == "ALLIANCE" ? "navBar2" : "navBar" } >
 				<ul>
 					<li className={character.value?.faction.type == "ALLIANCE" ? "dropdown2" : "dropdown" }>
@@ -44,6 +46,7 @@ const Mount: NextPage = () => {
 					</li>
 				</ul>
 			</div>
+			*/}
 		)
 	}
 
@@ -65,7 +68,6 @@ const Mount: NextPage = () => {
 
 	return (
 		<>
-			<Header/>
 			<Background>
 				<SimpleGrid columns={{base: 2, sm: 2, md: 4, lg: 6}} spacing={20}>
 					{mounts.map((mount, key) => (
