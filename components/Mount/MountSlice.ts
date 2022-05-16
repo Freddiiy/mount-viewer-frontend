@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store/store";
 import {IMount} from "../../utils/types/Mount.t";
 
-interface RealmSlice {
+interface MountSlice {
 	value: IMount[]
 }
 
-const initialState: RealmSlice = {
+const initialState: MountSlice = {
 	value: [],
 }
 
@@ -29,5 +29,5 @@ export const mountSlice = createSlice({
 })
 
 export const { addMount, addMounts, setMounts } = mountSlice.actions;
-export const selectRealm = (state: RootState) => state.mount.value;
+export const selectMount = (state: RootState) => state.mount.value;
 export default mountSlice.reducer;
