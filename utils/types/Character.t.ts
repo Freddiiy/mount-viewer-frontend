@@ -1,5 +1,6 @@
 export interface ICharacter {
 	assets: Asset[];
+	region:string,
 	id: number;
 	name: string;
 	level: number;
@@ -7,6 +8,7 @@ export interface ICharacter {
 	faction: Faction;
 	race: Race;
 	realm: Realm;
+
 }
 
 export interface Asset {
@@ -35,3 +37,4 @@ export interface Realm {
 	id: number;
 	slug: string;
 }
+

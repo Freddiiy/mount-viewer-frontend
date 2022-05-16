@@ -141,7 +141,7 @@ const Home: NextPage = () => {
 			<div>
 				{character.value ? (
 					<>
-						<p>{character.value.name} {character.value.id} {character.value.faction.name} {character.value.gender.name}</p>
+						<p>{character.value.name} {character.value.id} {character.value.faction.name} {character.value.gender.name} </p>
 					</>
 				) : (
 					<p>No character</p>

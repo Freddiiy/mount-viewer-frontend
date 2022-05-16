@@ -54,6 +54,7 @@ li {
 
 li a:hover, .dropdown2:hover .dropbtn2 {
     background-color: blue;
+
 }
 
 li.dropdown2 {

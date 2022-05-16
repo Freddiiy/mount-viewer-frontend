@@ -29,17 +29,16 @@ const Mount: NextPage = () => {
 
 	function Header() {
 		return (
-			<div className="navBar">
+			<div className={character.value?.faction.type == "ALLIANCE" ? "navBar2" : "navBar" } >
 				<ul>
-					<li className="dropdown">
-						<a href="javascript:void(0)">name</a>
+					<li className={character.value?.faction.type == "ALLIANCE" ? "dropdown2" : "dropdown" }>
+						<a href="javascript:void(0)" className={character.value?.faction.type == "ALLIANCE" ? "dropbtn2" : "dropbtn" }>{character.value?.name}<img  src={character.value?.assets.at(0).value}/></a>
 						<img src="" alt=""/>
-						<div className="dropdown-content">
-							<a href="#" className="link2"><p className="cName">character name</p></a>
-							<a href="#" className="link2">realm</a>
-							<a href="#" className="link2">region</a>
+						<div className={character.value?.faction.type == "ALLIANCE" ? "dropdown2-content" : "dropdown-content" }>
+							<a href="#" className={character.value?.faction.type == "ALLIANCE" ? "link" : "link2" }>realm</a>
+							<a href="#" className={character.value?.faction.type == "ALLIANCE" ? "link" : "link2" }>region</a>
 							<Link href="/" passHref>
-								<a href="#" className="link2">logout</a>
+								<a href="#" className={character.value?.faction.type == "ALLIANCE" ? "link" : "link2" }>logout</a>
 							</Link>
 						</div>
 					</li>
