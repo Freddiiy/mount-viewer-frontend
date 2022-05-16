@@ -29,7 +29,7 @@ export default function MountComponent({mount}: { mount: IMount }) {
 							whileTap={{scale: 0.96}}
 						>
 							<Image
-								rounded={"full"}
+								rounded={"2xl"}
 								boxSize={100}
 								src={mount.iconDisplay}
 								alt={"Image of " + mount.name}
@@ -61,16 +61,37 @@ export default function MountComponent({mount}: { mount: IMount }) {
 							<ModalCloseButton color={"white"}/>
 							<Stack direction={{base: "column", md: "row"}}>
 								<Image
+									rounded={"2xl"}
 									boxSize={500}
 									src={mount.creatureDisplays.at(0)}
 									alt={"Image of " + mount.name}
 									draggable={false}
 								/>
-								<List spacing={3} mt={10}>
-									<MountListItem title={"Mount ID "} text={mount.id.toString()}/>
-									<MountListItem title={"Description "} text={mount.description}/>
-									<MountListItem title={"Source "} text={mount.source.type}/>
-								</List>
+								<Box>
+									<VStack>
+										<Text
+											color={"white"}
+											fontSize={{base: "2xl", md: "4xl"}}
+											mb={3}
+										>
+											{mount.name}
+										</Text>
+										<Text color={"gray.300"} fontSize={"lg"} mb={3}>
+											{mount.id}
+										</Text>
+										<Text
+											color={"white"}
+											fontSize={"lg"}
+										>
+											{mount.description}
+										</Text>
+									</VStack>
+									<List spacing={3} mt={10}>
+										<MountListItem title={"Mount ID "} text={mount.id.toString()}/>
+										<MountListItem title={"Description "} text={mount.description}/>
+										<MountListItem title={"Source "} text={mount.source.type}/>
+									</List>
+								</Box>
 							</Stack>
 						</ModalContent>
 					</Modal>

@@ -6,14 +6,18 @@ import type { AppProps } from 'next/app'
 import RealmListProvider from "../store/RealmContext/RealmList";
 import {Provider} from "react-redux";
 import store from "../store/store";
+import {ChakraProvider} from "@chakra-ui/react";
+import theme from "../utils/theme/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return(
-      <Provider store={store}>
-          <RealmListProvider>
-            <Component {...pageProps} />
-          </RealmListProvider>
-      </Provider>
+      <ChakraProvider theme={theme}>
+          <Provider store={store}>
+              <RealmListProvider>
+                <Component {...pageProps} />
+              </RealmListProvider>
+          </Provider>
+      </ChakraProvider>
       )
 }
 
