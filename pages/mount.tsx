@@ -1,12 +1,12 @@
 import {NextPage} from "next";
 import GridComponent from "../components/GrindSection/MountComponet";
-import React, {useEffect, useState} from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 import {IMount} from "../utils/types/Mount.t";
 import CharacterGetter from "../components/CharacterGetter/CharacterGetter";
 import Link from "next/link";
 import {useAppSelector} from "../store/hooks";
 import {characterSlice} from "../components/Character/CharacterSlice";
-import {Box, Grid, Text, chakra} from "@chakra-ui/react";
+import {Box, Grid, Text, chakra, GridItem, SimpleGrid} from "@chakra-ui/react";
 import axios from "axios";
 import MountComponent from "../components/GrindSection/MountComponet";
 import {AnimatePresence, motion} from "framer-motion";
@@ -47,45 +47,32 @@ const Mount: NextPage = () => {
 		)
 	}
 
-	function BackgroundImg() {
+	function Background({children}: { children: ReactNode }) {
 		return (
 			<Box
 				px={8}
 				py={24}
 				mx={"auto"}
-				w={"full"}
-				h={"100vh"}
 				backgroundImage={character.value?.faction.type == "HORDE" ? "url(/horde-bg.png)" : "url(/allience-bg.png)"}
 				backgroundAttachment={"fixed"}
 				bgPos={"center"}
 				bgSize={"cover"}
 				overflow={"hidden"}>
+				{children}
 			</Box>
 		)
 	}
 
-
 	return (
 		<>
 			<Header/>
-			<BackgroundImg/>
-
-			<Grid
-				templateColumns={{
-					base: "repeat(5, 1fr)",
-					sm: "repeat(6, 1fr)",
-					md: "repeat(7, 1fr)",
-					lg: "repeat(8, 1fr)",
-					xl: "repeat(9, 1fr)",
-				}} gap={20}>
-				<>
-					<AnimatePresence>
-						{mounts.map((mount, key) => (
-							<MountComponent key={key} mount={mount}/>
-						))}
-					</AnimatePresence>
-				</>
-			</Grid>
+			<Background>
+				<SimpleGrid columns={{base: 2, sm: 2, md: 4, lg: 6}} spacing={20}>
+					{mounts.map((mount, key) => (
+						<MountComponent key={key} mount={mount}/>
+					))}
+				</SimpleGrid>
+			</Background>
 		</>
 	)
 }

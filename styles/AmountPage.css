@@ -26,7 +26,7 @@
 }
 
 /* Style the links inside the navigation bar */
-
+/*
 ul {
     list-style-type: none;
     padding: 0;
@@ -35,9 +35,13 @@ ul {
     margin-left: 85%;
 }
 
+ */
+/*
 li {
     float: left;
 }
+
+ */
 
 .dropbtn2 {
     display: inline-block;
@@ -52,14 +56,20 @@ li {
     background-color: #0070f3;
 }
 
+/*
 li a:hover, .dropdown2:hover .dropbtn2 {
     background-color: blue;
 
 }
 
+ */
+
+/*
 li.dropdown2 {
     display: inline-block;
 }
+
+ */
 
 .dropdown2-content {
     display: none;

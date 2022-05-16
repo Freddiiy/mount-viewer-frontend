@@ -1,4 +1,6 @@
 export interface IMount {
+	itemId: number;
+	iconDisplay: string;
 	id: number;
 	name: string;
 	creatureDisplays: string[];

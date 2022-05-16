@@ -1,15 +1,105 @@
 import asset from "../../public/Reagent_Bank-small.png"
 import {IMount} from "../../utils/types/Mount.t";
 import {Image} from "@chakra-ui/image";
-import {Center, Text, VStack} from "@chakra-ui/react";
+import {
+	Box,
+	Center,
+	Text,
+	VStack,
+	useDisclosure,
+	Flex,
+	ModalContent,
+	Modal,
+	Stack,
+	ListItem,
+	List, ModalCloseButton, ModalOverlay, ModalHeader
+} from "@chakra-ui/react";
+import {motion} from "framer-motion";
 
 export default function MountComponent({mount}: { mount: IMount }) {
+	const {isOpen, onOpen, onClose} = useDisclosure();
+
+	function MountImage() {
+		return (
+			<>
+				<Box onClick={onOpen}>
+					<VStack>
+						<motion.div
+							whileHover={{scale: 1.03, cursor: "pointer"}}
+							whileTap={{scale: 0.96}}
+						>
+							<Image
+								rounded={"full"}
+								boxSize={100}
+								src={mount.iconDisplay}
+								alt={"Image of " + mount.name}
+								draggable={false}/>
+						</motion.div>
+						<Text textColor={"white"}>{mount.name}</Text>
+					</VStack>
+				</Box>
+			</>
+		)
+	}
+
+	function CardModal() {
+		return (
+			<>
+				<Center>
+
+					<Modal isOpen={isOpen} onClose={onClose} size={"6xl"} isCentered>
+						<ModalOverlay bgColor={"blackAlpha.800"}/>
+						<ModalContent
+							bgColor={"transparent"}
+							shadow={"none"}
+							mt={{base: 150, md: 0}}
+							mx={{base: 2, md: 0}}
+							rounded={"none"}
+							alignItems={"center"}
+						>
+							<ModalHeader>{mount.name}</ModalHeader>
+							<ModalCloseButton color={"white"}/>
+							<Stack direction={{base: "column", md: "row"}}>
+								<Image
+									boxSize={500}
+									src={mount.creatureDisplays.at(0)}
+									alt={"Image of " + mount.name}
+									draggable={false}
+								/>
+								<List spacing={3} mt={10}>
+									<MountListItem title={"Mount ID "} text={mount.id.toString()}/>
+									<MountListItem title={"Description "} text={mount.description}/>
+									<MountListItem title={"Source "} text={mount.source.type}/>
+								</List>
+							</Stack>
+						</ModalContent>
+					</Modal>
+				</Center>
+			</>
+		);
+	}
+
 	return (
 		<>
-			<Image src={mount.creatureDisplays.at(0)}
-				   alt={"Display creature image for " + mount.name}
-				   boxSize={150}
-			/>
+			<Center>
+				<MountImage/>
+				<CardModal/>
+			</Center>
 		</>
 	)
+}
+
+function MountListItem({title, text,}: { title: string; text: string | undefined }) {
+	return (
+		<ListItem>
+			<Flex display={"inline"}>
+				<Text color={"white"}>
+					<Text color={"orange.300"} display={"inline"}>
+						{title}:{" "}
+					</Text>
+					{text}
+				</Text>
+			</Flex>
+		</ListItem>
+	);
 }

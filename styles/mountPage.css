@@ -35,9 +35,11 @@ ul {
     margin-left: 85%;
 }
 
+/*
 li {
     float: left;
 }
+ */
 
 .dropbtn {
     display: inline-block;
@@ -52,6 +54,7 @@ li {
     background-color: #690404;
 }
 
+/*
 li a:hover, .dropdown:hover .dropbtn {
     background-color: red;
 }
@@ -59,6 +62,7 @@ li a:hover, .dropdown:hover .dropbtn {
 li.dropdown {
     display: inline-block;
 }
+*/
 
 .dropdown-content {
     display: none;
