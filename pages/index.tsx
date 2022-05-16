@@ -8,7 +8,7 @@ import React, {ChangeEvent, FormEvent, useContext, useEffect, useState} from "re
 import {ICharacter} from "../utils/types/Character.t";
 import Link from "next/link";
 import react from "react";
-import GridComponent from "../components/GrindSection/GridComponet";
+import GridComponent from "../components/GrindSection/MountComponet";
 import {
 	RealmContextEU,
 	RealmContextUS,
