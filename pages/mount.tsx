@@ -9,6 +9,7 @@ import {characterSlice} from "../components/Character/CharacterSlice";
 import {Box, Grid, Text, chakra} from "@chakra-ui/react";
 import axios from "axios";
 import MountComponent from "../components/GrindSection/MountComponet";
+import {AnimatePresence, motion} from "framer-motion";
 
 const Mount: NextPage = () => {
 
@@ -22,13 +23,12 @@ const Mount: NextPage = () => {
 		}
 
 		fetchMounts();
-	})
+	}, [])
 
 	const character = useAppSelector(state => state.character)
 
-
-	return (
-		<>
+	function Header() {
+		return (
 			<div className="navBar">
 				<ul>
 					<li className="dropdown">
@@ -44,10 +44,12 @@ const Mount: NextPage = () => {
 						</div>
 					</li>
 				</ul>
-
-
 			</div>
+		)
+	}
 
+	function BackgroundImg() {
+		return (
 			<Box
 				px={8}
 				py={24}
@@ -60,16 +62,30 @@ const Mount: NextPage = () => {
 				bgSize={"cover"}
 				overflow={"hidden"}>
 			</Box>
-			<Grid templateColumns={{
-				base: "repeat(5, 1fr)",
-				sm: "repeat(6, 1fr)",
-				md: "repeat(7, 1fr)",
-				lg: "repeat(8, 1fr)",
-				xl: "repeat(9, 1fr)",
-			}}>
-				{mounts.map((mount, key) => (
-					<MountComponent key={key} mount={mount}/>
-				))}
+		)
+	}
+
+
+	return (
+		<>
+			<Header/>
+			<BackgroundImg/>
+
+			<Grid
+				templateColumns={{
+					base: "repeat(5, 1fr)",
+					sm: "repeat(6, 1fr)",
+					md: "repeat(7, 1fr)",
+					lg: "repeat(8, 1fr)",
+					xl: "repeat(9, 1fr)",
+				}} gap={20}>
+				<>
+					<AnimatePresence>
+						{mounts.map((mount, key) => (
+							<MountComponent key={key} mount={mount}/>
+						))}
+					</AnimatePresence>
+				</>
 			</Grid>
 		</>
 	)
