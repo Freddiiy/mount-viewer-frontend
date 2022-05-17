@@ -6,13 +6,6 @@ import {
 	Center,
 	Text,
 	VStack,
-	useDisclosure,
-	Flex,
-	ModalContent,
-	Modal,
-	Stack,
-	ListItem,
-	List, ModalCloseButton, ModalOverlay, ModalHeader
 } from "@chakra-ui/react";
 import {motion} from "framer-motion";
 import {useRouter} from "next/router";
@@ -20,7 +13,7 @@ import Link from "next/link";
 import MountInspect from "./MountInspect";
 
 export default function MountComponent({mount}: { mount: IMount }) {
-	
+
 	function MountImage() {
 		return (
 			<>

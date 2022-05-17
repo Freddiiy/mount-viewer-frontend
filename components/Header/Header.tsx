@@ -6,6 +6,7 @@ import Link from "next/link";
 import {EmailIcon} from "@chakra-ui/icons";
 import {useDispatch} from "react-redux";
 import searchSlice, {setSearch} from "./SearchSlice";
+import {useDebouncedValue} from "@mantine/hooks";
 
 export default function Header() {
 	const character = useAppSelector(state => state.character);

@@ -14,6 +14,8 @@
     "@chakra-ui/system": "2.0.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@mantine/hooks": "^4.2.5",
+    "@mantine/next": "^4.2.5",
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.27.2",
     "framer-motion": "^6.3.3",
