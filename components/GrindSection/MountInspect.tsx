@@ -1,4 +1,3 @@
-import {useRouter} from "next/router";
 import {useMount} from "../Mount/useMounts";
 import {Box, Center, Flex, List, ListItem, Spinner, Stack, Text, VStack} from "@chakra-ui/react";
 import {Image} from "@chakra-ui/image";

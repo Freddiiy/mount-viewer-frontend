@@ -19,6 +19,10 @@ const Index: NextPage = () => {
 	const search = useAppSelector(state => state.search);
 	const {mounts, isError, isLoading} = useMounts();
 
+	const perPage = 3;
+	const [lastObjectPos, setLastObjectPos] = useState(0);
+	const [loadedMounts, setLoadedMounts] = useState<IMount[]>();
+
 	if (isLoading) return <Spinner/>
 	if (isError) return <h1>No mounts found</h1>
 	return (
