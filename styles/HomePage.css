@@ -1,13 +1,14 @@
-.container{
+.container {
     display: block;
-    background-image: url("../public/Background.jpg");
+    background-image: url("../public/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     height: 100vh;
     white-space: nowrap
 }
-.container{
+
+.container {
     margin: auto;
     display: flex;
     align-items: center;
@@ -17,27 +18,31 @@
     height: 100vh;
 
 }
-#proppeties{
-text-align: center;
+
+#proppeties {
+    text-align: center;
 
 
 }
-#button{
+
+#button {
     margin-top: 50px;
     display: block;
 
 
 }
-#innerButton{
+
+.innerButton {
     background-color: red;
     color: yellow;
     border-color: yellow;
     width: 100px;
-   cursor: pointer;
+    cursor: pointer;
 
 
 }
-select {
+
+.selectOption {
     margin-left: 5px;
     background-color: red;
     color: yellow;
@@ -46,23 +51,25 @@ select {
     cursor: pointer;
 
 }
-select{
+
+.optionColor {
     color: yellow;
 }
-option{
-    color:yellow;
-}
 
-.inputCharacter{
+.inputCharacter {
     background-color: red;
     color: black;
     border-color: yellow;
 
 
 }
+
+/*
 input::placeholder {
     color: yellow;
 }
-.button2{
+ */
+
+.button2 {
     background-color: blue;
 }

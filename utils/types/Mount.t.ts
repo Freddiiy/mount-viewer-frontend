@@ -1,22 +1,30 @@
 export interface IMount {
-	mountId: number,
-	name: string,
-	isOwned: boolean,
-	ItemId : number,
+	itemId: number;
+	iconDisplay: string;
+	id: number;
+	name: string;
+	creatureDisplays: string[];
+	description: string;
+	is_useable: boolean;
+	source: Source;
+	isOwned?: boolean;
 }
 
-export const mountArray: IMount[] = [
-	{
-		mountId: 1,
-		name: "Sigurd",
-		isOwned: true,
-		ItemId: 742
-	},
-	{
-		mountId: 2,
-		name: "Johan",
-		isOwned: false,
-		ItemId: 5213
-	}
-]
+export interface Source {
+	type: Type;
+	name: string;
+}
 
+export enum Type {
+	Achievement = "ACHIEVEMENT",
+	Discovery = "DISCOVERY",
+	Drop = "DROP",
+	InGameShop = "IN-GAME SHOP",
+	NoSourceAvailable = "NO SOURCE AVAILABLE",
+	Profession = "PROFESSION",
+	Promotion = "PROMOTION",
+	Quest = "QUEST",
+	TradingCardGame = "TRADING CARD GAME",
+	Vendor = "VENDOR",
+	WorldEvent = "WORLD EVENT",
+}
