@@ -37,6 +37,7 @@ export default function Header() {
 			<Box
 				bg={"blue.800"}
 				bgColor={"gray.600"}
+				opacity={"98%"}
 				px={4}
 				py={1}
 				position={"fixed"}
