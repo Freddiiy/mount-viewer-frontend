@@ -13,7 +13,6 @@ import MountModal from "../../components/Mount/MountModal";
 import Header from "../../components/Header/Header";
 import Background from "../../components/Layout/Background";
 import {useDebouncedValue} from "@mantine/hooks";
-import {uglifyJsMinify} from "terser-webpack-plugin";
 
 const Index: NextPage = () => {
 	const character = useAppSelector(state => state.character)
