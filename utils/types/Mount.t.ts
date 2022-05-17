@@ -7,6 +7,7 @@ export interface IMount {
 	description: string;
 	is_useable: boolean;
 	source: Source;
+	isOwned?: boolean;
 }
 
 export interface Source {

@@ -54,8 +54,6 @@ const Home: NextPage = () => {
 		const data = await response.data;
 		dispatch(setCharacter(data));
 
-		console.log("wallah")
-
 		await router.push('/mount');
 	}
 

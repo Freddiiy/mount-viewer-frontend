@@ -1,30 +1,19 @@
 import {NextPage} from "next";
-import GridComponent from "../components/GrindSection/MountComponet";
+import GridComponent from "../../components/GrindSection/MountComponet";
 import React, {ReactNode, useEffect, useState} from "react";
-import {IMount} from "../utils/types/Mount.t";
-import CharacterGetter from "../components/CharacterGetter/CharacterGetter";
+import {IMount} from "../../utils/types/Mount.t";
+import CharacterGetter from "../../components/CharacterGetter/CharacterGetter";
 import Link from "next/link";
-import {useAppSelector} from "../store/hooks";
-import {characterSlice} from "../components/Character/CharacterSlice";
-import {Box, Grid, Text, chakra, GridItem, SimpleGrid} from "@chakra-ui/react";
-import axios from "axios";
-import MountComponent from "../components/GrindSection/MountComponet";
-import {AnimatePresence, motion} from "framer-motion";
+import {useAppSelector} from "../../store/hooks";
+import {characterSlice} from "../../components/Character/CharacterSlice";
+import {Box, SimpleGrid, Spinner} from "@chakra-ui/react";
+import MountComponent from "../../components/GrindSection/MountComponet";
+import {useMounts} from "../../components/Mount/useMounts";
+import Mount from "./index";
+import MountModal from "../../components/Mount/MountModal";
 
-const Mount: NextPage = () => {
-
-	const [mounts, setMounts] = useState<IMount[]>([]);
-
-	useEffect(() => {
-		async function fetchMounts() {
-			const response = await axios.get<IMount[]>("https://tychondi.dk/mount/api/mount")
-			const data = await response.data;
-			setMounts(data);
-		}
-
-		fetchMounts();
-	}, [])
-
+const Index: NextPage = () => {
+	const {mounts, isError, isLoading} = useMounts();
 	const character = useAppSelector(state => state.character)
 
 	function Header() {
@@ -46,7 +35,8 @@ const Mount: NextPage = () => {
 					</li>
 				</ul>
 			</div>
-			*/}
+			*/
+			}
 		)
 	}
 
@@ -66,17 +56,20 @@ const Mount: NextPage = () => {
 		)
 	}
 
+	if (isLoading) return <Spinner/>
+	if (isError) return <h1>No mounts found</h1>
 	return (
 		<>
 			<Background>
 				<SimpleGrid columns={{base: 2, sm: 2, md: 4, lg: 6}} spacing={20}>
-					{mounts.map((mount, key) => (
+					{mounts?.map((mount, key) => (
 						<MountComponent key={key} mount={mount}/>
 					))}
 				</SimpleGrid>
+				<MountModal/>
 			</Background>
 		</>
 	)
 }
 
-export default Mount
+export default Index
