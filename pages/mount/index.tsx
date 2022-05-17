@@ -20,8 +20,6 @@ const Index: NextPage = () => {
 	const [startCounter, setStartCounter] = useState(0);
 	const [endCounter, setEndCounter] = useState(40);
 	const {mounts, isError, isLoading} = useSlicedMounts(startCounter, endCounter);
-	const [_mounts, setMounts] = useState<IMount[]>();
-	const [debounced] = useDebouncedValue(search.value, 200);
 
 	const perPage = 3;
 	const [lastObjectPos, setLastObjectPos] = useState(0);
