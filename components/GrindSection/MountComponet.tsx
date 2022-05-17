@@ -20,9 +20,7 @@ import Link from "next/link";
 import MountInspect from "./MountInspect";
 
 export default function MountComponent({mount}: { mount: IMount }) {
-	const {isOpen, onOpen, onClose} = useDisclosure();
-	const router = useRouter();
-
+	
 	function MountImage() {
 		return (
 			<>
@@ -33,12 +31,17 @@ export default function MountComponent({mount}: { mount: IMount }) {
 								whileHover={{scale: 1.03, cursor: "pointer"}}
 								whileTap={{scale: 0.96}}
 							>
-								<Image
-									rounded={"full"}
-									boxSize={100}
-									src={mount.iconDisplay}
-									alt={"Image of " + mount.name}
-									draggable={false}/>
+								<Center>
+									<Image
+										rounded={"2xl"}
+										boxSize={100}
+										src={mount.iconDisplay}
+										alt={"Image of " + mount.name}
+										draggable={false}
+										position={"absolute"}/>
+									<Image boxSize={120} rounded={"xl"} src={"/backpack-icon.png"}
+										   alt={"backpack icon"}/>
+								</Center>
 							</motion.div>
 							<Text textColor={"white"}>{mount.name}</Text>
 						</VStack>
