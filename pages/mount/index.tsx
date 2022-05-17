@@ -11,57 +11,22 @@ import MountComponent from "../../components/GrindSection/MountComponet";
 import {useMounts} from "../../components/Mount/useMounts";
 import Mount from "./index";
 import MountModal from "../../components/Mount/MountModal";
+import Header from "../../components/Header/Header";
+import Background from "../../components/Layout/Background";
 
 const Index: NextPage = () => {
-	const {mounts, isError, isLoading} = useMounts();
 	const character = useAppSelector(state => state.character)
-
-	function Header() {
-		return (
-
-			{/*
-			<div className={character.value?.faction.type == "ALLIANCE" ? "navBar2" : "navBar" } >
-				<ul>
-					<li className={character.value?.faction.type == "ALLIANCE" ? "dropdown2" : "dropdown" }>
-						<a href="javascript:void(0)" className={character.value?.faction.type == "ALLIANCE" ? "dropbtn2" : "dropbtn" }>{character.value?.name}<img  src={character.value?.assets.at(0).value}/></a>
-						<img src="" alt=""/>
-						<div className={character.value?.faction.type == "ALLIANCE" ? "dropdown2-content" : "dropdown-content" }>
-							<a href="#" className={character.value?.faction.type == "ALLIANCE" ? "link" : "link2" }>realm</a>
-							<a href="#" className={character.value?.faction.type == "ALLIANCE" ? "link" : "link2" }>region</a>
-							<Link href="/" passHref>
-								<a href="#" className={character.value?.faction.type == "ALLIANCE" ? "link" : "link2" }>logout</a>
-							</Link>
-						</div>
-					</li>
-				</ul>
-			</div>
-			*/
-			}
-		)
-	}
-
-	function Background({children}: { children: ReactNode }) {
-		return (
-			<Box
-				px={8}
-				py={24}
-				mx={"auto"}
-				backgroundImage={character.value?.faction.type == "HORDE" ? "url(/horde-bg.png)" : "url(/allience-bg.png)"}
-				backgroundAttachment={"fixed"}
-				bgPos={"center"}
-				bgSize={"cover"}
-				overflow={"hidden"}>
-				{children}
-			</Box>
-		)
-	}
+	const search = useAppSelector(state => state.search);
+	const {mounts, isError, isLoading} = useMounts();
 
 	if (isLoading) return <Spinner/>
 	if (isError) return <h1>No mounts found</h1>
 	return (
 		<>
+			<Header/>
+			<h1>{search.value}</h1>
 			<Background>
-				<SimpleGrid columns={{base: 2, sm: 2, md: 4, lg: 6}} spacing={20}>
+				<SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4, xl: 5}} spacing={20}>
 					{mounts?.map((mount, key) => (
 						<MountComponent key={key} mount={mount}/>
 					))}
