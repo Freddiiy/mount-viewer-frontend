@@ -9,6 +9,19 @@ export function useMounts() {
 	return {
 		mounts: data,
 		isLoading: !error && !data,
+		isLoaded: !error && data,
+		isError: error,
+	}
+}
+
+export function useSlicedMounts(begin: number, end: number) {
+	const url = `https://tychondi.dk/mount/api/mount`;
+	const {data, error} = useSWR<IMount[]>(url, fetcher);
+
+	return {
+		mounts: data?.slice(begin, end),
+		isLoading: !error && !data,
+		isLoaded: !error && data,
 		isError: error,
 	}
 }
