@@ -1,6 +1,6 @@
 export interface ICharacter {
 	assets: Asset[];
-	region:string,
+	region: string,
 	id: number;
 	name: string;
 	level: number;
@@ -37,4 +37,16 @@ export interface Realm {
 	id: number;
 	slug: string;
 }
+
+export interface ICharacterMount {
+	mount: IBasicMount;
+	isUseable: boolean;
+	isFavorite: boolean;
+}
+
+export interface IBasicMount {
+	id: number;
+	name: string;
+}
+
 
