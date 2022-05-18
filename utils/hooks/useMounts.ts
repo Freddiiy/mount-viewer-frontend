@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import {IMount} from "../../utils/types/Mount.t";
+import {IMount} from "../types/Mount.t";
 import axios from "axios";
 import {useDebouncedValue} from "@mantine/hooks";
 import {useAppSelector} from "../../store/hooks";
@@ -49,7 +49,7 @@ export function useMount(id: number) {
 	}
 }
 
-async function fetcher<T>(url: string): Promise<T> {
+export async function fetcher<T>(url: string): Promise<T> {
 	const response = await axios.get<T>(url);
 	return response.data;
 }
