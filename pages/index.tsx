@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import {IMount} from "../utils/types/Mount.t";
-import axios from "axios";
+import axios, {Axios, AxiosError} from "axios";
 import React, {ChangeEvent, FormEvent, useContext, useEffect, useState} from "react";
 import {ICharacter} from "../utils/types/Character.t";
 import Link from "next/link";
@@ -18,12 +18,29 @@ import {Simulate} from "react-dom/test-utils";
 import select = Simulate.select;
 import {useRouter} from "next/router";
 import CharacterGetter from "../components/CharacterGetter/CharacterGetter";
-import {Box, Center, Container, Flex, FormControl, HStack, Input, Select, Text, VStack} from "@chakra-ui/react";
+import {
+	background,
+	Box,
+	Button,
+	Center,
+	Container,
+	Flex,
+	FormControl,
+	HStack,
+	Input,
+	Select,
+	Text,
+	VStack
+} from "@chakra-ui/react";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {selectCharacter, setCharacter} from "../components/Character/CharacterSlice";
+import WowInput from "../components/Form/WowInput";
+import WowSelect from "../components/Form/WowSelect";
 
 const Home: NextPage = () => {
 	const router = useRouter();
+	const [error, setError] = useState("");
+	const [isInvalid, setIsInvalid] = useState(false);
 	const [formData, setFormData] = useState({
 		characterName: "",
 		region: "eu",
@@ -50,12 +67,32 @@ const Home: NextPage = () => {
 		if (formData.realm == "") return;
 
 		const url = `https://tychondi.dk/mount/api/character/${formData.region}/${formData.realm}/${formData.characterName}`
-		const response = await axios.get<ICharacter>(url);
-		const data = await response.data;
-		dispatch(setCharacter(data));
+		const response = await axios.get<ICharacter>(url)
+			.then((res) => {
+				setIsInvalid(false);
+				setError("");
+				const data = res.data;
+				dispatch(setCharacter(data));
 
-		await router.push('/mount');
+				router.push('/mount');
+			})
+			.catch((err: Error | AxiosError) => {
+				if (!axios.isAxiosError(err)) return;
+
+				if (err.response?.status == 404) {
+					setError("Character not found");
+					setIsInvalid(true)
+					return;
+				}
+
+				if (err.response?.status == 500) {
+					setError("Server made an error");
+					setIsInvalid(true)
+					return;
+				}
+			});
 	}
+
 
 	const RealmEU = useContext(RealmContextEU);
 	const RealmUS = useContext(RealmContextUS);
@@ -104,35 +141,76 @@ const Home: NextPage = () => {
 			<div className="container">
 				<div id="proppeties">
 					<form onSubmit={handleSubmit}>
-						<input
-							className="inputCharacter"
-							placeholder="Character name"
-							name={"characterName"}
-							onChange={handleChange}
-						/>
+						<HStack>
+							<Input
+								placeholder="Character name"
+								name={"characterName"}
+								onChange={handleChange}
+								isInvalid={isInvalid}
+								borderWidth={2}
+								borderColor={"yellow"}
+								errorBorderColor={"crimson"}
+								textColor={"yellow"}
+								bgColor={"red"}
+								width={400}
+							/>
 
-						<select id="region" className="selectOption" name={"region"} onChange={handleChange}>
-							<option value={"eu"}>EU</option>
-							<option value={"us"}>US</option>
-						</select>
 
-						<select required id="realm" className="selectOption" name={"realm"} onChange={handleChange}>
-							<option disabled defaultValue={"Realms"} hidden>
-								Realms
-							</option>
+							<Select
+								id="region"
+								name={"region"}
+								onChange={handleChange}
+								isInvalid={isInvalid}
+								borderWidth={2}
+								borderColor={"yellow"}
+								errorBorderColor={"crimson"}
+								textColor={"yellow"}
+								bgColor={"red"}
+								width={100}
+							>
 
-							{formData.region == "eu" ? RealmEU?.map((realm, key) => (
-								<option key={key} value={realm.slug}> {realm.name} </option>
-							)) : null}
-							{formData.region == "us" ? RealmUS?.map((realm, key) => (
-								<option key={key} value={realm.slug}> {realm.name} </option>
-							)) : null}
-						</select>
-						<div id="button">
-							<button className={"innerButton"} type={"submit"}>
-								Login
-							</button>
-						</div>
+								<option value={"eu"}>EU</option>
+								<option value={"us"}>US</option>
+							</Select>
+
+							<Select
+								required
+								id="realm"
+								name={"realm"}
+								onChange={handleChange}
+								isInvalid={isInvalid}
+								borderWidth={2}
+								borderColor={"yellow"}
+								errorBorderColor={"crimson"}
+								textColor={"yellow"}
+								bgColor={"red"}
+								width={200}
+
+							>
+								<option disabled defaultValue={"Realms"} hidden>
+									Realms
+								</option>
+
+								{formData.region == "eu" ? RealmEU?.map((realm, key) => (
+									<option key={key} value={realm.slug}> {realm.name} </option>
+								)) : null}
+								{formData.region == "us" ? RealmUS?.map((realm, key) => (
+									<option key={key} value={realm.slug}> {realm.name} </option>
+								)) : null}
+							</Select>
+						</HStack>
+						<Text textColor={"red"} fontSize={"xl"}>hello {error}</Text>
+						<Button
+							mt={10}
+							type={"submit"}
+							borderWidth={2}
+							borderColor={"yellow"}
+							textColor={"yellow"}
+							bgColor={"red"}
+							width={100}
+							_hover={{backgroundColor: "red.500"}}>
+							Login
+						</Button>
 					</form>
 				</div>
 			</div>
