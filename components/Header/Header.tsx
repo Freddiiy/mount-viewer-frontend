@@ -72,6 +72,7 @@ export default function Header() {
 						</HStack>
 						<HStack justifyContent={"center"} spacing={4}>
 							<Input placeholder={"Search for a mount..."} size={"md"} value={search.value}
+								   textColor={"white"}
 								   onChange={handleChange}/>
 						</HStack>
 						<Flex alignItems={"center"}>
