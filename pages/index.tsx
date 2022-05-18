@@ -149,7 +149,7 @@ const Home: NextPage = () => {
 								borderColor={"yellow"}
 								errorBorderColor={"crimson"}
 								textColor={"yellow"}
-								bgColor={"red"}
+								bg={"red"}
 								width={400}
 							/>
 							<Select
@@ -161,7 +161,7 @@ const Home: NextPage = () => {
 								borderColor={"yellow"}
 								errorBorderColor={"crimson"}
 								textColor={"yellow"}
-								bgColor={"red"}
+								bg={"red"}
 								width={100}
 							>
 								<option value={"eu"}>EU</option>
@@ -178,7 +178,7 @@ const Home: NextPage = () => {
 								borderColor={"yellow"}
 								errorBorderColor={"crimson"}
 								textColor={"yellow"}
-								bgColor={"red"}
+								bg={"red"}
 								width={200}
 
 							>
