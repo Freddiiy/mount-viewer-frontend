@@ -152,8 +152,6 @@ const Home: NextPage = () => {
 								bgColor={"red"}
 								width={400}
 							/>
-
-
 							<Select
 								id="region"
 								name={"region"}
@@ -166,7 +164,6 @@ const Home: NextPage = () => {
 								bgColor={"red"}
 								width={100}
 							>
-
 								<option value={"eu"}>EU</option>
 								<option value={"us"}>US</option>
 							</Select>
@@ -197,7 +194,7 @@ const Home: NextPage = () => {
 								)) : null}
 							</Select>
 						</HStack>
-						<Text textColor={"red"} fontSize={"xl"}>hello {error}</Text>
+						<Text textColor={"red"} fontSize={"xl"}>{error}</Text>
 						<Button
 							mt={10}
 							type={"submit"}
