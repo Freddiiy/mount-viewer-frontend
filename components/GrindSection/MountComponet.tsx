@@ -26,7 +26,7 @@ export default function MountComponent({mount}: { mount: IMount }) {
 								whileHover={{scale: 1.03, cursor: "pointer"}}
 								whileTap={{scale: 0.96}}
 							>
-								<Box opacity={!mount.isOwned ? "100%" : "50%"}>
+								<Box opacity={mount.isOwned ? "100%" : "50%"}>
 									<Center>
 										<Image
 											rounded={"2xl"}
@@ -37,7 +37,7 @@ export default function MountComponent({mount}: { mount: IMount }) {
 											position={"absolute"}/>
 										<Image boxSize={120} rounded={"xl"} src={"/backpack-icon.png"}
 											   alt={"backpack icon"}/>
-										{mount.isOwned
+										{!mount.isOwned
 											? <SmallCloseIcon boxSize={200} position={"absolute"} color={"red"}/>
 											: null}
 
