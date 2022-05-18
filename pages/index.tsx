@@ -34,8 +34,6 @@ import {
 } from "@chakra-ui/react";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {selectCharacter, setCharacter} from "../components/Character/CharacterSlice";
-import WowInput from "../components/Form/WowInput";
-import WowSelect from "../components/Form/WowSelect";
 
 const Home: NextPage = () => {
 	const router = useRouter();
