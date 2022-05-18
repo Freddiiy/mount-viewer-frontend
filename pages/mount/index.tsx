@@ -30,14 +30,6 @@ const Index: NextPage = () => {
 						<MountComponent key={key} mount={mount}/>
 					))}
 				</SimpleGrid>
-				<Box position={"fixed"} top={20} left={10}>
-					<Button onClick={() => setStartCounter(startCounter - 1)}>-</Button>
-					<Button onClick={() => setStartCounter(startCounter + 1)}>+</Button>
-				</Box>
-				<Box position={"fixed"} top={20} right={10}>
-					<Button onClick={() => setEndCounter(endCounter - 1)}>-</Button>
-					<Button onClick={() => setEndCounter(endCounter + 1)}>+</Button>
-				</Box>
 				<MountModal/>
 			</Background>
 		</>
