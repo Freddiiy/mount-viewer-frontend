@@ -30,7 +30,7 @@ import {
 	Select,
 	Text,
 	VStack,
-	Image,
+	Image, Stack,
 } from "@chakra-ui/react";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {selectCharacter, setCharacter} from "../components/Character/CharacterSlice";
@@ -104,80 +104,87 @@ const Home: NextPage = () => {
 		<>
 			<div className="container">
 				<div id="proppeties">
-					<VStack>
-						<ExistingUser/>
-						<form onSubmit={handleSubmit}>
-							<HStack>
-								<Input
-									placeholder="Character name"
-									name={"characterName"}
-									onChange={handleChange}
-									isInvalid={isInvalid}
+					<Center>
+
+						<VStack>
+							<ExistingUser/>
+							<form onSubmit={handleSubmit}>
+								<Stack direction={{base: "column", md: "row"}}>
+									<Input
+										placeholder="Character name"
+										name={"characterName"}
+										onChange={handleChange}
+										isInvalid={isInvalid}
+										borderWidth={2}
+										borderColor={"yellow"}
+										errorBorderColor={"crimson"}
+										textColor={"yellow"}
+										bg={"red"}
+										width={300}
+									/>
+									<HStack>
+
+										<Select
+											id="region"
+											name={"region"}
+											onChange={handleChange}
+											isInvalid={isInvalid}
+											borderWidth={2}
+											borderColor={"yellow"}
+											errorBorderColor={"crimson"}
+											textColor={"yellow"}
+											bg={"red"}
+											width={100}
+										>
+											<option style={{backgroundColor: "red", color: "yellow"}} value={"eu"}>EU
+											</option>
+											<option style={{backgroundColor: "red", color: "yellow"}}>US</option>
+										</Select>
+
+										<Select
+											required
+											id="realm"
+											name={"realm"}
+											onChange={handleChange}
+											isInvalid={isInvalid}
+											borderWidth={2}
+											borderColor={"yellow"}
+											errorBorderColor={"crimson"}
+											textColor={"yellow"}
+											bg={"red"}
+											width={200}
+
+										>
+											<option disabled defaultValue={"Realms"} hidden>
+												Realms
+											</option>
+
+											{formData.region == "eu" ? RealmEU?.map((realm, key) => (
+												<option style={{backgroundColor: "red", color: "yellow"}} key={key}
+														value={realm.slug}> {realm.name} </option>
+											)) : null}
+											{formData.region == "us" ? RealmUS?.map((realm, key) => (
+												<option style={{backgroundColor: "red", color: "yellow"}} key={key}
+														value={realm.slug}> {realm.name} </option>
+											)) : null}
+										</Select>
+									</HStack>
+								</Stack>
+								<Text textColor={"red"} fontSize={"xl"}>{error}</Text>
+								<Button
+									mt={10}
+									type={"submit"}
 									borderWidth={2}
 									borderColor={"yellow"}
-									errorBorderColor={"crimson"}
 									textColor={"yellow"}
-									bg={"red"}
-									width={400}
-								/>
-								<Select
-									id="region"
-									name={"region"}
-									onChange={handleChange}
-									isInvalid={isInvalid}
-									borderWidth={2}
-									borderColor={"yellow"}
-									errorBorderColor={"crimson"}
-									textColor={"yellow"}
-									bg={"red"}
+									bgColor={"red"}
 									width={100}
-								>
-									<option style={{backgroundColor: "red", color: "yellow"}} value={"eu"}>EU</option>
-									<option style={{backgroundColor: "red", color: "yellow"}}>US</option>
-								</Select>
-
-								<Select
-									required
-									id="realm"
-									name={"realm"}
-									onChange={handleChange}
-									isInvalid={isInvalid}
-									borderWidth={2}
-									borderColor={"yellow"}
-									errorBorderColor={"crimson"}
-									textColor={"yellow"}
-									bg={"red"}
-									width={200}
-
-								>
-									<option disabled defaultValue={"Realms"} hidden>
-										Realms
-									</option>
-
-									{formData.region == "eu" ? RealmEU?.map((realm, key) => (
-										<option style={{backgroundColor: "red", color: "yellow"}} key={key}
-												value={realm.slug}> {realm.name} </option>
-									)) : null}
-									{formData.region == "us" ? RealmUS?.map((realm, key) => (
-										<option style={{backgroundColor: "red", color: "yellow"}} key={key}
-												value={realm.slug}> {realm.name} </option>
-									)) : null}
-								</Select>
-							</HStack>
-							<Text textColor={"red"} fontSize={"xl"}>{error}</Text>
-							<Button
-								mt={10}
-								type={"submit"}
-								borderWidth={2}
-								borderColor={"yellow"}
-								textColor={"yellow"}
-								bgColor={"red"}
-								width={100}
-								_hover={{backgroundColor: "red.500"}}>
-								Login
-							</Button>
-						</form>
-					</VStack>
+									_hover={{backgroundColor: "red.500"}}>
+									Login
+								</Button>
+							</form>
+						</VStack>
+					</Center>
 				</div>
 			</div>
 		</>
@@ -205,9 +212,11 @@ function ExistingUser() {
 				?
 				<>
 					<VStack mb={20}>
-						<HStack>
-							<Text textColor={"white"}>Is this you?</Text>
-							<Image rounded={"2xl"} src={character.assets.at(0)?.value} alt={"character image"}/>
+						<VStack>
+							<HStack>
+								<Text textColor={"white"} fontSize={"xl"}>Are you {character.name}?</Text>
+								<Image rounded={"2xl"} src={character.assets.at(0)?.value} alt={"character image"}/>
+							</HStack>
 							<Button
 								onClick={() => router.push("/mount")}
 								borderWidth={2}
@@ -216,7 +225,7 @@ function ExistingUser() {
 								bgColor={"red"}
 								width={150}
 								_hover={{backgroundColor: "red.500"}}>Lookup {character.name}</Button>
-						</HStack>
+						</VStack>
 					</VStack>
 				</>
 				: null

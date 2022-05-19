@@ -14,6 +14,7 @@ import MountInspect from "./MountInspect";
 import {MutableRefObject, useRef} from "react";
 import {useIntersection} from "@mantine/hooks";
 import {Icon, SmallCloseIcon} from "@chakra-ui/icons";
+import truncate from "../../utils/truncate";
 
 export default function MountComponent({mount}: { mount: IMount }) {
 	function MountImage() {
@@ -30,21 +31,25 @@ export default function MountComponent({mount}: { mount: IMount }) {
 									<Center>
 										<Image
 											rounded={"2xl"}
-											boxSize={100}
+											boxSize={{base: 75, md: 100}}
 											src={mount.iconDisplay}
 											alt={"Image of " + mount.name}
 											draggable={false}
 											position={"absolute"}/>
-										<Image boxSize={120} rounded={"xl"} src={"/backpack-icon.png"}
+										<Image boxSize={{base: 86, md: 120}} rounded={"xl"} src={"/backpack-icon.png"}
 											   alt={"backpack icon"}/>
 										{!mount.isOwned
-											? <SmallCloseIcon boxSize={200} position={"absolute"} color={"red"}/>
+											? <SmallCloseIcon boxSize={{base: 150, md: 200}} position={"absolute"}
+															  color={"red"}/>
 											: null}
 
 									</Center>
 								</Box>
 							</motion.div>
-							<Text textColor={"white"}>{mount.name}</Text>
+							<Text display={{base: "none", md: "block"}} textColor={"white"}
+								  textAlign={"center"}>{mount.name}</Text>
+							<Text display={{base: "block", md: "none"}} textColor={"white"}
+								  textAlign={"center"}>{truncate(mount.name)}</Text>
 						</VStack>
 					</Box>
 				</Link>
