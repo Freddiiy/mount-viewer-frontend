@@ -1,42 +1,51 @@
 import {useAppSelector} from "../../store/hooks";
-import {Box, Button, Container, Flex, HStack, IconButton, Input, Slide, Text, useDisclosure} from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	Container,
+	Flex,
+	HStack,
+	IconButton,
+	Input,
+	Menu, MenuButton, MenuIcon, MenuItem, MenuList,
+	Slide, Switch,
+	Text,
+	useDisclosure, VStack
+} from "@chakra-ui/react";
 import {Image} from "@chakra-ui/image";
-import {ChangeEvent, ReactNode, useEffect, useState} from "react";
-import Link from "next/link";
-import {EmailIcon} from "@chakra-ui/icons";
+import {ChangeEvent, MouseEventHandler, ReactNode, useEffect, useState} from "react";
+
 import {useDispatch} from "react-redux";
-import searchSlice, {setSearch} from "./SearchSlice";
-import {useDebouncedValue} from "@mantine/hooks";
+import {setOwned, setSearch} from "./SearchSlice";
+import {logout} from "../Character/CharacterSlice";
+import {useRouter} from "next/router";
 
 export default function Header() {
 	const character = useAppSelector(state => state.character);
-	const search = useAppSelector(state => state.search);
+	const search = useAppSelector(state => state.search.value);
+	const filterIsOwned = useAppSelector(state => state.search.ownedMounts);
 	const dispatch = useDispatch()
 
-	const {isOpen, onOpen, onClose} = useDisclosure();
-	const [isScrolled, setScrolled] = useState<boolean>(false);
-	const textColor = isScrolled ? "black" : "white";
-	const hoverTextColor = isScrolled ? "blue.400" : "blue.200";
-	const textBg = "gray.100";
+	const router = useRouter();
 
 	function handleChange(event: ChangeEvent<HTMLInputElement>) {
 		event.preventDefault();
 		const value = event.target.value;
-
 		dispatch(setSearch(value))
 	}
 
-	useEffect(() => {
-		window.addEventListener("scroll", () => {
-			setScrolled(window.scrollY > 0);
-		});
-	}, [setScrolled]);
+	function handleCheckbox(event: ChangeEvent<HTMLInputElement>) {
+		event.preventDefault();
+		const checked = event.target.checked;
+		dispatch(setOwned(checked));
+	}
 
 	return (
 		<>
 			<Box
 				bg={"blue.800"}
 				bgColor={"gray.600"}
+				opacity={"98%"}
 				px={4}
 				py={1}
 				position={"fixed"}
@@ -70,17 +79,36 @@ export default function Header() {
 							</Text>
 						</HStack>
 						<HStack justifyContent={"center"} spacing={4}>
-							<Input placeholder={"Search for a mount..."} size={"md"} value={search.value}
+							<Input placeholder={"Search for a mount..."} size={"md"} value={search}
+								   textColor={"white"}
 								   onChange={handleChange}/>
+							<Switch colorScheme={character.value?.faction.type == "HORDE" ? "red" : "blue"} isChecked={filterIsOwned} onChange={handleCheckbox}/>
 						</HStack>
 						<Flex alignItems={"center"}>
 							<HStack spacing={4}>
-								<Image
-									rounded={"2xl"}
-									src={character.value ? character.value.assets.at(0)?.value : "/avatar-fallback.png"}
-									alt={"Character avatar"}
-									boxSize={"59"}
-								/>
+								<Menu>
+									<MenuButton>
+										<Image
+											rounded={"2xl"}
+											src={character.value ? character.value.assets.at(0)?.value : "/avatar-fallback.png"}
+											alt={"Character avatar"}
+											boxSize={"59"}
+										/>
+									</MenuButton>
+									<MenuList>
+										<MenuItem>
+											<VStack>
+												<Text>Signed in as</Text>
+												<Text fontWeight={"semibold"}>{character.value?.name} @ {character.value?.realm.name}</Text>
+											</VStack>
+										</MenuItem>
+										<MenuItem onClick={() => {
+											dispatch(logout());
+											router.push("/")
+
+										}}>Log out</MenuItem>
+									</MenuList>
+								</Menu>
 							</HStack>
 						</Flex>
 					</Flex>

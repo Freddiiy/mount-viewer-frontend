@@ -1,7 +1,7 @@
 import {IMount} from "../../utils/types/Mount.t";
 import {Box, Flex, List, ListItem, Spinner, Stack, Text} from "@chakra-ui/react";
 import {Image} from "@chakra-ui/image";
-import {useMount} from "../../components/Mount/useMounts";
+import {useMount} from "../../utils/hooks/useMounts";
 import {useRouter} from "next/router";
 import {array} from "prop-types";
 import MountInspect from "../../components/GrindSection/MountInspect";

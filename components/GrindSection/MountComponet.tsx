@@ -11,9 +11,11 @@ import {motion} from "framer-motion";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import MountInspect from "./MountInspect";
+import {MutableRefObject, useRef} from "react";
+import {useIntersection} from "@mantine/hooks";
+import {Icon, SmallCloseIcon} from "@chakra-ui/icons";
 
 export default function MountComponent({mount}: { mount: IMount }) {
-
 	function MountImage() {
 		return (
 			<>
@@ -24,17 +26,23 @@ export default function MountComponent({mount}: { mount: IMount }) {
 								whileHover={{scale: 1.03, cursor: "pointer"}}
 								whileTap={{scale: 0.96}}
 							>
-								<Center>
-									<Image
-										rounded={"2xl"}
-										boxSize={100}
-										src={mount.iconDisplay}
-										alt={"Image of " + mount.name}
-										draggable={false}
-										position={"absolute"}/>
-									<Image boxSize={120} rounded={"xl"} src={"/backpack-icon.png"}
-										   alt={"backpack icon"}/>
-								</Center>
+								<Box opacity={mount.isOwned ? "100%" : "50%"}>
+									<Center>
+										<Image
+											rounded={"2xl"}
+											boxSize={100}
+											src={mount.iconDisplay}
+											alt={"Image of " + mount.name}
+											draggable={false}
+											position={"absolute"}/>
+										<Image boxSize={120} rounded={"xl"} src={"/backpack-icon.png"}
+											   alt={"backpack icon"}/>
+										{!mount.isOwned
+											? <SmallCloseIcon boxSize={200} position={"absolute"} color={"red"}/>
+											: null}
+
+									</Center>
+								</Box>
 							</motion.div>
 							<Text textColor={"white"}>{mount.name}</Text>
 						</VStack>

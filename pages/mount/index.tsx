@@ -1,43 +1,62 @@
 import {NextPage} from "next";
-import GridComponent from "../../components/GrindSection/MountComponet";
 import React, {ReactNode, useEffect, useState} from "react";
 import {IMount} from "../../utils/types/Mount.t";
-import CharacterGetter from "../../components/CharacterGetter/CharacterGetter";
-import Link from "next/link";
-import {useAppSelector} from "../../store/hooks";
-import {SimpleGrid, Spinner} from "@chakra-ui/react";
+import {Box, Button, SimpleGrid, Spinner} from "@chakra-ui/react";
 import MountComponent from "../../components/GrindSection/MountComponet";
-import {useMounts} from "../../components/Mount/useMounts";
-import Mount from "./index";
+import {fetcher, useMount, useMounts, useSlicedMounts} from "../../utils/hooks/useMounts";
 import MountModal from "../../components/Mount/MountModal";
 import Header from "../../components/Header/Header";
 import Background from "../../components/Layout/Background";
-import {useDebouncedValue} from "@mantine/hooks";
+import InfiniteScroll from "react-infinite-scroll-component";
+import {end} from "@popperjs/core";
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import {useRouter} from "next/router";
+import {setCharacter} from "../../components/Character/CharacterSlice";
+import {ICharacter} from "../../utils/types/Character.t";
 
 const Index: NextPage = () => {
-	const character = useAppSelector(state => state.character)
-	const search = useAppSelector(state => state.search);
-	const {mounts, isError, isLoading} = useMounts();
-	const [debounced] = useDebouncedValue(search.value, 200);
+	const [startCounter, setStartCounter] = useState(0);
+	const [endCounter, setEndCounter] = useState(40);
+
+	const {mounts, isLoading, isError} = useSlicedMounts(0, endCounter);
 
 	const perPage = 3;
 	const [lastObjectPos, setLastObjectPos] = useState(0);
 	const [loadedMounts, setLoadedMounts] = useState<IMount[]>();
+	const character = useAppSelector(state => state.character);
+	const dispatch = useAppDispatch();
+	const router = useRouter();
+
+	useEffect(() => {
+		const existingUser = localStorage.getItem("user");
+		if (!existingUser) {
+			router.push("/");
+			return;
+		}
+		const user: ICharacter = existingUser ? JSON.parse(existingUser) : undefined;
+		dispatch(setCharacter(user));
+	}, [dispatch, router])
 
 	if (isLoading) return <Spinner/>
 	if (isError) return <h1>No mounts found</h1>
+
 	return (
 		<>
-			<Header/>
-			<Background>
-				<h1>{debounced}</h1>
-				<SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4, xl: 5}} spacing={20}>
-					{mounts?.map((mount, key) => (
-						<MountComponent key={key} mount={mount}/>
-					))}
-				</SimpleGrid>
-				<MountModal/>
-			</Background>
+			{mounts ?
+				<>
+					<Header/>
+					<Background>
+						<InfiniteScroll next={() => setEndCounter(endCounter + 20)} hasMore={endCounter >= mounts.length} loader={<Spinner />} dataLength={mounts?.length}>
+							<SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4, xl: 5}} spacing={20}>
+								{mounts?.map((mount, key) => (
+									<MountComponent key={key} mount={mount}/>
+								))}
+							</SimpleGrid>
+						</InfiniteScroll>
+						<MountModal/>
+					</Background>
+				</>
+			: null}
 		</>
 	)
 }
