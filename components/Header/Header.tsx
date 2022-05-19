@@ -59,7 +59,7 @@ export default function Header() {
 			>
 				<Container maxWidth={"container.lg"}>
 					<Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-						<Link href={"/"} passHref>
+						<Link href={"/"} passHref style={{cursor: "pointer"}}>
 							<HStack spacing={2} alignItems={"center"}>
 								<Box>
 									<Image
