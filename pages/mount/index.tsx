@@ -1,7 +1,7 @@
 import {NextPage} from "next";
 import React, {ReactNode, useEffect, useState} from "react";
 import {IMount} from "../../utils/types/Mount.t";
-import {Box, Button, Center, SimpleGrid, Spinner} from "@chakra-ui/react";
+import {Box, Button, Center, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import MountComponent from "../../components/GrindSection/MountComponet";
 import {fetcher, useMount, useMounts, useSlicedMounts} from "../../utils/hooks/useMounts";
 import MountModal from "../../components/Mount/MountModal";
@@ -46,6 +46,7 @@ const Index: NextPage = () => {
 		<>
 			<Header/>
 			<Background>
+				<Text textColor={"white"}>{mounts?.length}</Text>
 				{isLoading && <Loader/>}
 				{mounts ?
 					<motion.div
@@ -54,15 +55,25 @@ const Index: NextPage = () => {
 						variants={animationContainer}
 					>
 
-						<InfiniteScroll next={() => setEndCounter(endCounter + 20)}
-										hasMore={endCounter <= mounts.length} loader={<Spinner/>}
-										dataLength={mounts?.length}>
-							<SimpleGrid columns={{base: 3, sm: 2, md: 3, lg: 4, xl: 5}} spacing={{base: 5, md: 20}}>
-								{mounts?.map((mount) => (
-									<MountComponent key={mount.id} mount={mount}/>
-								))}
-							</SimpleGrid>
-						</InfiniteScroll>
+						{mounts.length <= 0
+							?
+							<InfiniteScroll next={() => setEndCounter(endCounter + 20)}
+											hasMore={endCounter <= mounts.length} loader={<Spinner/>}
+											dataLength={mounts?.length}>
+								<SimpleGrid columns={{base: 3, sm: 2, md: 3, lg: 4, xl: 5}} spacing={{base: 5, md: 20}}>
+									{mounts?.map((mount) => (
+										<MountComponent key={mount.id} mount={mount}/>
+									))}
+								</SimpleGrid>
+							</InfiniteScroll>
+							: (
+								<>
+									<Center height={"100vh"}>
+										<Text textColor={"white"}>No mounts found</Text>
+									</Center>
+								</>
+							)
+						}
 						<MountModal/>
 					</motion.div>
 					: null}
