@@ -29,24 +29,12 @@ export default function Header() {
 
 	const router = useRouter();
 
-	const {isOpen, onOpen, onClose} = useDisclosure();
-	const [isScrolled, setScrolled] = useState<boolean>(false);
-	const textColor = isScrolled ? "black" : "white";
-	const hoverTextColor = isScrolled ? "blue.400" : "blue.200";
-	const textBg = "gray.100";
-
 	function handleChange(event: ChangeEvent<HTMLInputElement>) {
 		event.preventDefault();
 		const value = event.target.value;
 
 		dispatch(setSearch(value))
 	}
-
-	useEffect(() => {
-		window.addEventListener("scroll", () => {
-			setScrolled(window.scrollY > 0);
-		});
-	}, [setScrolled]);
 
 	return (
 		<>

@@ -34,6 +34,7 @@ import {
 } from "@chakra-ui/react";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {selectCharacter, setCharacter} from "../components/Character/CharacterSlice";
+import {setMounts} from "../components/Mount/MountSlice";
 
 const Home: NextPage = () => {
 	const router = useRouter();
@@ -45,7 +46,6 @@ const Home: NextPage = () => {
 		realm: "",
 	});
 
-	const character = useAppSelector(state => state.character);
 	const dispatch = useAppDispatch()
 
 	function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -64,7 +64,7 @@ const Home: NextPage = () => {
 		if (formData.region == "") return;
 		if (formData.realm == "") return;
 
-		const url = `https://tychondi.dk/mount/api/character/${formData.region}/${formData.realm}/${formData.characterName}`
+		const url = `https://tychondi.dk/mount/api/character/${formData.region.toLowerCase()}/${formData.realm.toLowerCase()}/${formData.characterName.toLowerCase()}`
 		const response = await axios.get<ICharacter>(url)
 			.then((res) => {
 				setIsInvalid(false);
@@ -95,47 +95,12 @@ const Home: NextPage = () => {
 	const RealmEU = useContext(RealmContextEU);
 	const RealmUS = useContext(RealmContextUS);
 
+	useEffect(() => {
+		dispatch(setMounts([]))
+	}, [])
+
 	return (
 		<>
-			{/*
-			<Box
-				px={8}
-				py={24}
-				mx={"auto"}
-				w={"full"}
-				h={"100vh"}
-				backgroundImage="url(/background.jpg)"
-				bgPos={"center"}
-				bgSize={"cover"}
-				overflow={"hidden"}>
-
-				<Flex h={"full"} alignItems={"center"} justifyContent={"center"}>
-					<Center>
-						<Container maxW={"container.lg"}>
-							<Box
-								w={"full"}
-								mx={"auto"}
-								justifyContent={"center"}
-								alignItems={"center"}
-								textAlign={"center"}
-							>
-								<FormControl>
-									<VStack>
-										<Input name={"charactername"} type={"input"} placeholder={"Character name"}/>
-										<Select name={"region"} placeholder={"Select region"}>
-											<option>EU</option>
-											<option>US</option>
-										</Select>
-									</VStack>
-								</FormControl>
-							</Box>
-						</Container>
-					</Center>
-				</Flex>
-			</Box>
-
-			*/}
-
 			<div className="container">
 				<div id="proppeties">
 					<form onSubmit={handleSubmit}>
