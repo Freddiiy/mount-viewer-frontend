@@ -8,23 +8,22 @@ import {
 	IconButton,
 	Input,
 	Menu, MenuButton, MenuIcon, MenuItem, MenuList,
-	Slide,
+	Slide, Switch,
 	Text,
 	useDisclosure, VStack
 } from "@chakra-ui/react";
 import {Image} from "@chakra-ui/image";
-import {ChangeEvent, ReactNode, useEffect, useState} from "react";
-import Link from "next/link";
-import {EmailIcon} from "@chakra-ui/icons";
+import {ChangeEvent, MouseEventHandler, ReactNode, useEffect, useState} from "react";
+
 import {useDispatch} from "react-redux";
-import searchSlice, {setSearch} from "./SearchSlice";
-import {useDebouncedValue} from "@mantine/hooks";
+import {setOwned, setSearch} from "./SearchSlice";
 import {logout} from "../Character/CharacterSlice";
 import {useRouter} from "next/router";
 
 export default function Header() {
 	const character = useAppSelector(state => state.character);
-	const search = useAppSelector(state => state.search);
+	const search = useAppSelector(state => state.search.value);
+	const filterIsOwned = useAppSelector(state => state.search.ownedMounts);
 	const dispatch = useDispatch()
 
 	const router = useRouter();
@@ -32,8 +31,13 @@ export default function Header() {
 	function handleChange(event: ChangeEvent<HTMLInputElement>) {
 		event.preventDefault();
 		const value = event.target.value;
-
 		dispatch(setSearch(value))
+	}
+
+	function handleCheckbox(event: ChangeEvent<HTMLInputElement>) {
+		event.preventDefault();
+		const checked = event.target.checked;
+		dispatch(setOwned(checked));
 	}
 
 	return (
@@ -75,9 +79,10 @@ export default function Header() {
 							</Text>
 						</HStack>
 						<HStack justifyContent={"center"} spacing={4}>
-							<Input placeholder={"Search for a mount..."} size={"md"} value={search.value}
+							<Input placeholder={"Search for a mount..."} size={"md"} value={search}
 								   textColor={"white"}
 								   onChange={handleChange}/>
+							<Switch colorScheme={character.value?.faction.type == "HORDE" ? "red" : "blue"} isChecked={filterIsOwned} onChange={handleCheckbox}/>
 						</HStack>
 						<Flex alignItems={"center"}>
 							<HStack spacing={4}>

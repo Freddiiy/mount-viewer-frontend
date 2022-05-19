@@ -1,6 +1,5 @@
 import type {NextPage} from "next";
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import {IMount} from "../utils/types/Mount.t";
 import axios, {Axios, AxiosError} from "axios";
@@ -30,11 +29,13 @@ import {
 	Input,
 	Select,
 	Text,
-	VStack
+	VStack,
+	Image,
 } from "@chakra-ui/react";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {selectCharacter, setCharacter} from "../components/Character/CharacterSlice";
 import {setMounts} from "../components/Mount/MountSlice";
+import {useDispatch} from "react-redux";
 
 const Home: NextPage = () => {
 	const router = useRouter();
@@ -97,85 +98,129 @@ const Home: NextPage = () => {
 
 	useEffect(() => {
 		dispatch(setMounts([]))
-	}, [])
+	}, [dispatch])
 
 	return (
 		<>
 			<div className="container">
 				<div id="proppeties">
-					<form onSubmit={handleSubmit}>
-						<HStack>
-							<Input
-								placeholder="Character name"
-								name={"characterName"}
-								onChange={handleChange}
-								isInvalid={isInvalid}
+					<VStack>
+						<ExistingUser/>
+						<form onSubmit={handleSubmit}>
+							<HStack>
+								<Input
+									placeholder="Character name"
+									name={"characterName"}
+									onChange={handleChange}
+									isInvalid={isInvalid}
+									borderWidth={2}
+									borderColor={"yellow"}
+									errorBorderColor={"crimson"}
+									textColor={"yellow"}
+									bg={"red"}
+									width={400}
+								/>
+								<Select
+									id="region"
+									name={"region"}
+									onChange={handleChange}
+									isInvalid={isInvalid}
+									borderWidth={2}
+									borderColor={"yellow"}
+									errorBorderColor={"crimson"}
+									textColor={"yellow"}
+									bg={"red"}
+									width={100}
+								>
+									<option className={".optionColor"} value={"eu"}>EU</option>
+									<option className={".optionColor"} value={"us"}>US</option>
+								</Select>
+
+								<Select
+									required
+									id="realm"
+									name={"realm"}
+									onChange={handleChange}
+									isInvalid={isInvalid}
+									borderWidth={2}
+									borderColor={"yellow"}
+									errorBorderColor={"crimson"}
+									textColor={"yellow"}
+									bg={"red"}
+									width={200}
+
+								>
+									<option disabled defaultValue={"Realms"} hidden>
+										Realms
+									</option>
+
+									{formData.region == "eu" ? RealmEU?.map((realm, key) => (
+										<option className={".optionColor"} key={key} value={realm.slug}> {realm.name} </option>
+									)) : null}
+									{formData.region == "us" ? RealmUS?.map((realm, key) => (
+										<option className={".optionColor"} key={key} value={realm.slug}> {realm.name} </option>
+									)) : null}
+								</Select>
+							</HStack>
+							<Text textColor={"red"} fontSize={"xl"}>{error}</Text>
+							<Button
+								mt={10}
+								type={"submit"}
 								borderWidth={2}
 								borderColor={"yellow"}
-								errorBorderColor={"crimson"}
 								textColor={"yellow"}
-								bg={"red"}
-								width={400}
-							/>
-							<Select
-								id="region"
-								name={"region"}
-								onChange={handleChange}
-								isInvalid={isInvalid}
-								borderWidth={2}
-								borderColor={"yellow"}
-								errorBorderColor={"crimson"}
-								textColor={"yellow"}
-								bg={"red"}
+								bgColor={"red"}
 								width={100}
-							>
-								<option value={"eu"}>EU</option>
-								<option value={"us"}>US</option>
-							</Select>
-
-							<Select
-								required
-								id="realm"
-								name={"realm"}
-								onChange={handleChange}
-								isInvalid={isInvalid}
-								borderWidth={2}
-								borderColor={"yellow"}
-								errorBorderColor={"crimson"}
-								textColor={"yellow"}
-								bg={"red"}
-								width={200}
-
-							>
-								<option disabled defaultValue={"Realms"} hidden>
-									Realms
-								</option>
-
-								{formData.region == "eu" ? RealmEU?.map((realm, key) => (
-									<option key={key} value={realm.slug}> {realm.name} </option>
-								)) : null}
-								{formData.region == "us" ? RealmUS?.map((realm, key) => (
-									<option key={key} value={realm.slug}> {realm.name} </option>
-								)) : null}
-							</Select>
-						</HStack>
-						<Text textColor={"red"} fontSize={"xl"}>{error}</Text>
-						<Button
-							mt={10}
-							type={"submit"}
-							borderWidth={2}
-							borderColor={"yellow"}
-							textColor={"yellow"}
-							bgColor={"red"}
-							width={100}
-							_hover={{backgroundColor: "red.500"}}>
-							Login
-						</Button>
-					</form>
+								_hover={{backgroundColor: "red.500"}}>
+								Login
+							</Button>
+						</form>
+					</VStack>
 				</div>
 			</div>
 		</>
 	);
 };
+
+function ExistingUser() {
+	const character = useAppSelector(state => state.character.value)
+	const dispatch = useDispatch();
+	const router = useRouter();
+
+	useEffect(() => {
+		const existingUser = localStorage.getItem("user");
+		if (!existingUser) {
+			router.push("/");
+			return;
+		}
+		const user: ICharacter = existingUser ? JSON.parse(existingUser) : undefined;
+		dispatch(setCharacter(user));
+	}, [dispatch, router])
+
+	return (
+		<>
+			{character
+				?
+				<>
+					<VStack mb={20}>
+						<HStack>
+							<Text textColor={"white"}>Is this you?</Text>
+							<Image rounded={"2xl"} src={character.assets.at(0)?.value} alt={"character image"}/>
+						<Button
+							onClick={() => router.push("/mount")}
+							borderWidth={2}
+							borderColor={"yellow"}
+							textColor={"yellow"}
+							bgColor={"red"}
+							width={150}
+							_hover={{backgroundColor: "red.500"}}>Lookup {character.name}</Button>
+						</HStack>
+					</VStack>
+				</>
+				: null
+			}
+		</>
+	)
+}
 
 export default Home;

@@ -23,11 +23,16 @@ export function useMounts() {
 	const character = useAppSelector(state => state.character);
 	const {characterMountsData, characterMountError} = useCharacterMounts();
 	if (character) {
+		data?.forEach((mount) => mount.isOwned = false);
 		characterMountsData?.filter((characterMount) => {
 			data?.forEach((mount) => {
 				if (mount.id == characterMount.mount.id) mount.isOwned = true;
 			})
 		})
+
+		if (search.ownedMounts) {
+			filteredData = data?.filter((mount) => search.ownedMounts == mount.isOwned)
+		}
 
 		return {
 			mounts: filteredData,
