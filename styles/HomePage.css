@@ -53,7 +53,8 @@
 }
 
 .optionColor {
-    color: red;
+    background-color: red;
+    color: yellow;
 }
 
 .inputCharacter {

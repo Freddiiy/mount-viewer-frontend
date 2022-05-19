@@ -82,7 +82,8 @@ export default function Header() {
 							<Input placeholder={"Search for a mount..."} size={"md"} value={search}
 								   textColor={"white"}
 								   onChange={handleChange}/>
-							<Switch colorScheme={character.value?.faction.type == "HORDE" ? "red" : "blue"} isChecked={filterIsOwned} onChange={handleCheckbox}/>
+							<Switch colorScheme={character.value?.faction.type == "HORDE" ? "red" : "blue"}
+									isChecked={filterIsOwned} onChange={handleCheckbox}/>
 						</HStack>
 						<Flex alignItems={"center"}>
 							<HStack spacing={4}>
@@ -95,11 +96,12 @@ export default function Header() {
 											boxSize={"59"}
 										/>
 									</MenuButton>
-									<MenuList>
+									<MenuList bgColor={"gray.600"} textAlign={"left"} textColor={"white"}>
 										<MenuItem>
 											<VStack>
 												<Text>Signed in as</Text>
-												<Text fontWeight={"semibold"}>{character.value?.name} @ {character.value?.realm.name}</Text>
+												<Text
+													fontWeight={"semibold"}>{character.value?.name} @ {character.value?.realm.name}</Text>
 											</VStack>
 										</MenuItem>
 										<MenuItem onClick={() => {
