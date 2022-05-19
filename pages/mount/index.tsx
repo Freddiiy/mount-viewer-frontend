@@ -14,6 +14,8 @@ import {useRouter} from "next/router";
 import {setCharacter} from "../../components/Character/CharacterSlice";
 import {ICharacter} from "../../utils/types/Character.t";
 import Loader from "../../components/Layout/Loader";
+import {AnimatePresence, motion} from "framer-motion";
+import {animationContainer, animationItem} from "../../utils/types/transition-config";
 
 const Index: NextPage = () => {
 	const [startCounter, setStartCounter] = useState(0);
@@ -46,18 +48,23 @@ const Index: NextPage = () => {
 			<Background>
 				{isLoading && <Loader/>}
 				{mounts ?
-					<>
+					<motion.div
+						initial={"hidden"}
+						animate={"show"}
+						variants={animationContainer}
+					>
+
 						<InfiniteScroll next={() => setEndCounter(endCounter + 20)}
 										hasMore={endCounter <= mounts.length} loader={<Spinner/>}
 										dataLength={mounts?.length}>
-							<SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4, xl: 5}} spacing={20}>
-								{mounts?.map((mount, key) => (
-									<MountComponent key={key} mount={mount}/>
+							<SimpleGrid columns={{base: 3, sm: 2, md: 3, lg: 4, xl: 5}} spacing={{base: 5, md: 20}}>
+								{mounts?.map((mount) => (
+									<MountComponent key={mount.id} mount={mount}/>
 								))}
 							</SimpleGrid>
 						</InfiniteScroll>
 						<MountModal/>
-					</>
+					</motion.div>
 					: null}
 			</Background>
 		</>

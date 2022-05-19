@@ -19,6 +19,7 @@ import {useDispatch} from "react-redux";
 import {setOwned, setSearch} from "./SearchSlice";
 import {logout} from "../Character/CharacterSlice";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 export default function Header() {
 	const character = useAppSelector(state => state.character);
@@ -58,26 +59,29 @@ export default function Header() {
 			>
 				<Container maxWidth={"container.lg"}>
 					<Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-						<HStack spacing={2} alignItems={"center"}>
-							<Box>
-								<Image
-									rounded={"xl"}
-									src="/logo.png"
-									alt="Logo"
-									height={9}
-									draggable={false}
-								/>
-							</Box>
-							<Text
-								color={"white"}
-								fontWeight={"hairline"}
-								fontSize={20}
-								transition={"ease"}
-								transitionDuration="600ms"
-							>
-								Mountie
-							</Text>
-						</HStack>
+						<Link href={"/"} passHref>
+							<HStack spacing={2} alignItems={"center"}>
+								<Box>
+									<Image
+										rounded={"xl"}
+										src="/logo.png"
+										alt="Logo"
+										height={9}
+										draggable={false}
+									/>
+								</Box>
+								<Text
+									color={"white"}
+									fontWeight={"hairline"}
+									fontSize={20}
+									transition={"ease"}
+									transitionDuration="600ms"
+									display={{base: "none", md: "block"}}
+								>
+									Mountie
+								</Text>
+							</HStack>
+						</Link>
 						<HStack justifyContent={"center"} spacing={4}>
 							<Input placeholder={"Search for a mount..."} size={"md"} value={search}
 								   textColor={"white"}
