@@ -1,5 +1,17 @@
 import {useAppSelector} from "../../store/hooks";
-import {Box, Button, Container, Flex, HStack, IconButton, Input, Slide, Text, useDisclosure} from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	Container,
+	Flex,
+	HStack,
+	IconButton,
+	Input,
+	Menu, MenuButton, MenuIcon, MenuItem, MenuList,
+	Slide,
+	Text,
+	useDisclosure, VStack
+} from "@chakra-ui/react";
 import {Image} from "@chakra-ui/image";
 import {ChangeEvent, ReactNode, useEffect, useState} from "react";
 import Link from "next/link";
@@ -7,11 +19,15 @@ import {EmailIcon} from "@chakra-ui/icons";
 import {useDispatch} from "react-redux";
 import searchSlice, {setSearch} from "./SearchSlice";
 import {useDebouncedValue} from "@mantine/hooks";
+import {logout} from "../Character/CharacterSlice";
+import {useRouter} from "next/router";
 
 export default function Header() {
 	const character = useAppSelector(state => state.character);
 	const search = useAppSelector(state => state.search);
 	const dispatch = useDispatch()
+
+	const router = useRouter();
 
 	const {isOpen, onOpen, onClose} = useDisclosure();
 	const [isScrolled, setScrolled] = useState<boolean>(false);
@@ -77,12 +93,29 @@ export default function Header() {
 						</HStack>
 						<Flex alignItems={"center"}>
 							<HStack spacing={4}>
-								<Image
-									rounded={"2xl"}
-									src={character.value ? character.value.assets.at(0)?.value : "/avatar-fallback.png"}
-									alt={"Character avatar"}
-									boxSize={"59"}
-								/>
+								<Menu>
+									<MenuButton>
+										<Image
+											rounded={"2xl"}
+											src={character.value ? character.value.assets.at(0)?.value : "/avatar-fallback.png"}
+											alt={"Character avatar"}
+											boxSize={"59"}
+										/>
+									</MenuButton>
+									<MenuList>
+										<MenuItem>
+											<VStack>
+												<Text>Signed in as</Text>
+												<Text fontWeight={"semibold"}>{character.value?.name} @ {character.value?.realm.name}</Text>
+											</VStack>
+										</MenuItem>
+										<MenuItem onClick={() => {
+											dispatch(logout());
+											router.push("/")
+
+										}}>Log out</MenuItem>
+									</MenuList>
+								</Menu>
 							</HStack>
 						</Flex>
 					</Flex>
