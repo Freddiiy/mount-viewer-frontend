@@ -31,7 +31,7 @@ export function useMounts() {
 		})
 
 		if (search.ownedMounts) {
-			filteredData = data?.filter((mount) => search.ownedMounts == mount.isOwned)
+			filteredData = filteredData?.filter((mount) => search.ownedMounts == mount.isOwned)
 		}
 
 		return {
