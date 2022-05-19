@@ -132,8 +132,8 @@ const Home: NextPage = () => {
 									bg={"red"}
 									width={100}
 								>
-									<option className={".optionColor"} value={"eu"}>EU</option>
-									<option className={".optionColor"} value={"us"}>US</option>
+									<option style={{backgroundColor: "red", color: "yellow"}} value={"eu"}>EU</option>
+									<option style={{backgroundColor: "red", color: "yellow"}}>US</option>
 								</Select>
 
 								<Select
@@ -155,10 +155,12 @@ const Home: NextPage = () => {
 									</option>
 
 									{formData.region == "eu" ? RealmEU?.map((realm, key) => (
-										<option className={".optionColor"} key={key} value={realm.slug}> {realm.name} </option>
+										<option style={{backgroundColor: "red", color: "yellow"}} key={key}
+												value={realm.slug}> {realm.name} </option>
 									)) : null}
 									{formData.region == "us" ? RealmUS?.map((realm, key) => (
-										<option className={".optionColor"} key={key} value={realm.slug}> {realm.name} </option>
+										<option style={{backgroundColor: "red", color: "yellow"}} key={key}
+												value={realm.slug}> {realm.name} </option>
 									)) : null}
 								</Select>
 							</HStack>
@@ -206,14 +208,14 @@ function ExistingUser() {
 						<HStack>
 							<Text textColor={"white"}>Is this you?</Text>
 							<Image rounded={"2xl"} src={character.assets.at(0)?.value} alt={"character image"}/>
-						<Button
-							onClick={() => router.push("/mount")}
-							borderWidth={2}
-							borderColor={"yellow"}
-							textColor={"yellow"}
-							bgColor={"red"}
-							width={150}
-							_hover={{backgroundColor: "red.500"}}>Lookup {character.name}</Button>
+							<Button
+								onClick={() => router.push("/mount")}
+								borderWidth={2}
+								borderColor={"yellow"}
+								textColor={"yellow"}
+								bgColor={"red"}
+								width={150}
+								_hover={{backgroundColor: "red.500"}}>Lookup {character.name}</Button>
 						</HStack>
 					</VStack>
 				</>

@@ -1,11 +1,12 @@
 import {useMount} from "../../utils/hooks/useMounts";
 import {Box, Center, Flex, List, ListItem, Spinner, Stack, Text, VStack} from "@chakra-ui/react";
 import {Image} from "@chakra-ui/image";
+import Loader from "../Layout/Loader";
 
 export default function MountInspect({mountId}: { mountId: any }) {
 	const {mount, isLoading, isError} = useMount(parseInt(mountId));
 
-	if (isLoading) return <Spinner size={"xl"}/>
+	if (isLoading) return <Loader/>
 	if (isError) return <h1>Error initializing mount</h1>
 
 	return (
@@ -32,13 +33,16 @@ export default function MountInspect({mountId}: { mountId: any }) {
 								{mount?.description}
 							</Text>
 						</VStack>
-						<Image
-							rounded={"2xl"}
-							boxSize={500}
-							src={mount?.creatureDisplays.at(0)}
-							alt={"Image of " + mount?.name}
-							draggable={false}
-						/>
+						<Center>
+
+							<Image
+								rounded={"2xl"}
+								boxSize={500}
+								src={mount?.creatureDisplays.at(0)}
+								alt={"Image of " + mount?.name}
+								draggable={false}
+							/>
+						</Center>
 						<List spacing={3} mt={10}>
 							<MountListItem title={"Index ID "} text={mount?.id.toString()}/>
 							<MountListItem title={"Description "} text={mount?.description}/>

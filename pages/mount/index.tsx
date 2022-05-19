@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {useRouter} from "next/router";
 import {setCharacter} from "../../components/Character/CharacterSlice";
 import {ICharacter} from "../../utils/types/Character.t";
+import Loader from "../../components/Layout/Loader";
 
 const Index: NextPage = () => {
 	const [startCounter, setStartCounter] = useState(0);
@@ -37,16 +38,18 @@ const Index: NextPage = () => {
 		dispatch(setCharacter(user));
 	}, [dispatch, router])
 
-	if (isLoading) return <Spinner/>
 	if (isError) return <h1>No mounts found</h1>
 
 	return (
 		<>
-			{mounts ?
-				<>
-					<Header/>
-					<Background>
-						<InfiniteScroll next={() => setEndCounter(endCounter + 20)} hasMore={endCounter >= mounts.length} loader={<Spinner />} dataLength={mounts?.length}>
+			<Header/>
+			<Background>
+				{isLoading && <Loader/>}
+				{mounts ?
+					<>
+						<InfiniteScroll next={() => setEndCounter(endCounter + 20)}
+										hasMore={endCounter >= mounts.length} loader={<Spinner/>}
+										dataLength={mounts?.length}>
 							<SimpleGrid columns={{base: 2, sm: 2, md: 3, lg: 4, xl: 5}} spacing={20}>
 								{mounts?.map((mount, key) => (
 									<MountComponent key={key} mount={mount}/>
@@ -54,9 +57,9 @@ const Index: NextPage = () => {
 							</SimpleGrid>
 						</InfiniteScroll>
 						<MountModal/>
-					</Background>
-				</>
-			: null}
+					</>
+					: null}
+			</Background>
 		</>
 	)
 }
