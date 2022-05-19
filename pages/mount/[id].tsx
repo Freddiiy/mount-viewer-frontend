@@ -7,6 +7,7 @@ import {array} from "prop-types";
 import MountInspect from "../../components/GrindSection/MountInspect";
 import {NextPage} from "next";
 import React, {ReactNode} from "react";
+import Header from "../../components/Header/Header";
 
 const MountPage: NextPage = () => {
 	const router = useRouter();
@@ -30,6 +31,7 @@ const MountPage: NextPage = () => {
 
 	return (
 		<>
+			<Header />
 			<Background>
 				<MountInspect mountId={mountId}/>
 			</Background>
