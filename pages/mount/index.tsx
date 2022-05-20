@@ -46,36 +46,34 @@ const Index: NextPage = () => {
 		<>
 			<Header/>
 			<Background>
-				<Text textColor={"white"}>{mounts?.length}</Text>
 				{isLoading && <Loader/>}
 				{mounts ?
-					<motion.div
-						initial={"hidden"}
-						animate={"show"}
-						variants={animationContainer}
-					>
-
-						{mounts.length <= 0
-							?
+					<AnimatePresence>
+						<motion.div
+							initial={"hidden"}
+							animate={"show"}
+							variants={animationContainer}
+						>
 							<InfiniteScroll next={() => setEndCounter(endCounter + 20)}
 											hasMore={endCounter <= mounts.length} loader={<Spinner/>}
 											dataLength={mounts?.length}>
-								<SimpleGrid columns={{base: 3, sm: 2, md: 3, lg: 4, xl: 5}} spacing={{base: 5, md: 20}}>
+								<SimpleGrid columns={{base: 3, sm: 2, md: 3, lg: 4, xl: 5}}
+											spacing={{base: 5, md: 20}}>
+
 									{mounts?.map((mount) => (
-										<MountComponent key={mount.id} mount={mount}/>
+										<motion.div key={mount.id.toString()} layout>
+											<MountComponent key={mount.id} mount={mount}/>
+										</motion.div>
 									))}
 								</SimpleGrid>
 							</InfiniteScroll>
-							: (
-								<>
-									<Center height={"100vh"}>
-										<Text textColor={"white"}>No mounts found</Text>
-									</Center>
-								</>
-							)
-						}
-						<MountModal/>
-					</motion.div>
+							{mounts.length <= 0 &&
+                                <Center height={"100vh"}>
+                                    <Text textColor={"white"} fontSize={"4xl"}>No mounts found</Text>
+                                </Center>}
+							<MountModal/>
+						</motion.div>
+					</AnimatePresence>
 					: null}
 			</Background>
 		</>

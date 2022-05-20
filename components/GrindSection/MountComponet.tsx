@@ -19,33 +19,35 @@ import truncate from "../../utils/truncate";
 export default function MountComponent({mount}: { mount: IMount }) {
 	function MountImage() {
 		return (
-			<>
+			<motion.div
+				whileHover={{scale: 1.03, cursor: "pointer"}}
+				whileTap={{scale: 0.96}}
+				initial={"hidden"}
+				animate={"show"}
+				layoutId={mount.id.toString()}
+				layout
+			>
 				<Link href={`mount/?mountId=${mount.id}`} as={`/mount/${mount.id}`} passHref>
 					<Box>
 						<VStack>
-							<motion.div
-								whileHover={{scale: 1.03, cursor: "pointer"}}
-								whileTap={{scale: 0.96}}
-							>
-								<Box opacity={mount.isOwned ? "100%" : "50%"}>
-									<Center>
-										<Image
-											rounded={"2xl"}
-											boxSize={{base: 75, md: 100}}
-											src={mount.iconDisplay}
-											alt={"Image of " + mount.name}
-											draggable={false}
-											position={"absolute"}/>
-										<Image boxSize={{base: 86, md: 120}} rounded={"xl"} src={"/backpack-icon.png"}
-											   alt={"backpack icon"}/>
-										{!mount.isOwned
-											? <SmallCloseIcon boxSize={{base: 150, md: 200}} position={"absolute"}
-															  color={"red"}/>
-											: null}
+							<Box opacity={mount.isOwned ? "100%" : "50%"}>
+								<Center>
+									<Image
+										rounded={"2xl"}
+										boxSize={{base: 75, md: 100}}
+										src={mount.iconDisplay}
+										alt={"Image of " + mount.name}
+										draggable={false}
+										position={"absolute"}/>
+									<Image boxSize={{base: 86, md: 120}} rounded={"xl"} src={"/backpack-icon.png"}
+										   alt={"backpack icon"}/>
+									{!mount.isOwned
+										? <SmallCloseIcon boxSize={{base: 150, md: 200}} position={"absolute"}
+														  color={"red"}/>
+										: null}
 
-									</Center>
-								</Box>
-							</motion.div>
+								</Center>
+							</Box>
 							<Text display={{base: "none", md: "block"}} textColor={"white"}
 								  textAlign={"center"}>{mount.name}</Text>
 							<Text display={{base: "block", md: "none"}} textColor={"white"}
@@ -53,7 +55,7 @@ export default function MountComponent({mount}: { mount: IMount }) {
 						</VStack>
 					</Box>
 				</Link>
-			</>
+			</motion.div>
 		)
 	}
 
