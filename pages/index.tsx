@@ -223,7 +223,6 @@ function ExistingUser() {
 								borderColor={"yellow"}
 								textColor={"yellow"}
 								bgColor={"red"}
-								width={150}
 								_hover={{backgroundColor: "red.500"}}>Lookup {character.name}</Button>
 						</VStack>
 					</VStack>
